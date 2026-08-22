@@ -162,7 +162,7 @@ const News = {
 
   // ===== 默认分类 =====
   WORLD_CATEGORIES: ['时政', '世界', '金融', '战争', '财政', '股票', '基金', '民生', '经营', '信息差'],
-  EDU_CATEGORIES: ['英语', '高数', '药学', '报考', '学习资料'],
+  EDU_CATEGORIES: ['英语', '高数', '药学', '报考', '信息差', '学习资料'],
 
   // ===== 专升本内置学习资料 =====
   builtinEdu: [
@@ -252,6 +252,80 @@ const News = {
       title: '专升本各科目分值分布与复习优先级',
       description: '英语150分、高数150分、专业课150分。根据自身强弱项合理分配时间。',
       source: 'Jade内置资料',
+    },
+    // —— 信息差 ——
+    {
+      id: 'edu_builtin_14', category: '信息差',
+      title: '专升本信息差：五年制 vs 三年制 区别与优势',
+      description: '五年制专科（3+2）和普通三年制专科在专升本报考时，大多数省份待遇相同，都可以报考全日制专升本。\n\n关键差异：\n1. 五年制学生英语基础普遍薄弱，要更早开始准备英语\n2. 五年制药学专业对口的本科院校选择面比临床医学广\n3. 部分省份对五年制有单独的招生计划，竞争反而更小\n4. 南阳医专等医学院校专升本通过率普遍高于综合类专科\n\n建议：提前一年确定目标院校，查近三年录取分数线和招生人数。',
+      source: 'Jade内置·专升本信息差',
+    },
+    {
+      id: 'edu_builtin_15', category: '信息差',
+      title: '专升本信息差：药学专业对口本科院校清单',
+      description: '药学专业专升本可报考的本科院校类型：\n\n【药科大学】\n- 中国药科大学（江苏，部分省份有招生计划）\n- 沈阳药科大学（辽宁）\n- 广东药科大学（广东）\n\n【医科大学/中医药大学】\n- 各省医科大学药学院\n- 中医药大学药学、中药学专业\n\n【综合大学药学院】\n- 各省综合性大学药学院\n\n【河南考生重点关注】\n- 河南大学药学院\n- 郑州大学药学院\n- 河南中医药大学\n- 新乡医学院\n- 河南科技大学\n\n注意：每年招生计划有变化，以当年省教育考试院公布为准。',
+      source: 'Jade内置·专升本信息差',
+    },
+    {
+      id: 'edu_builtin_16', category: '信息差',
+      title: '专升本信息差：90%的人不知道的备考捷径',
+      description: '1. 真题是最好的资料，近5年真题至少刷3遍，很多考点重复出现\n\n2. 英语作文可以提前背模板，书信类、议论文类各准备2-3个万能模板\n\n3. 高数选择题占比高，不会的题可以用特殊值法、排除法提高正确率\n\n4. 专业课可以找目标院校的期末试卷和课件，出题老师往往就是那几个\n\n5. 不要盲目报辅导班，先自学一个月找到薄弱点再有针对性报班\n\n6. 关注目标院校的专升本QQ群、贴吧，学长学姐的经验帖价值很高\n\n7. 报名时间、政策变化这些信息差，比多刷一套题更重要',
+      source: 'Jade内置·专升本信息差',
+    },
+    {
+      id: 'edu_builtin_17', category: '信息差',
+      title: '专升本信息差：河南专升本最新政策解读',
+      description: '【报名条件】\n- 河南省普通高校应届专科毕业生（含五年制）\n- 思想政治素质好，身体健康\n- 学习期间未受记过及以上纪律处分\n\n【考试科目】\n- 公共英语：150分\n- 专业综合：150分（药学类考生考生理病理或药学综合）\n- 总分300分\n\n【录取规则】\n- 按专业大类平行志愿投档\n- 从高分到低分择优录取\n- 没有单科分数线限制\n\n【重要时间节点】\n- 报名：每年11-12月（专科大三上学期）\n- 考试：每年4月中下旬\n- 成绩公布：5月上旬\n- 志愿填报：5月中旬\n- 录取：5月底-6月初\n\n建议关注"河南省教育考试院"官网获取最新信息。',
+      source: 'Jade内置·专升本信息差',
+    },
+    {
+      id: 'edu_builtin_18', category: '信息差',
+      title: '南阳医专专升本：学长学姐经验汇总',
+      description: '【关于南阳医专】\n南阳医学高等专科学校是河南省内医学类专科中实力较强的，药学专业专升本升学率一直不错。\n\n【备考建议】\n1. 英语是拉分大户，南阳医专五年制学生英语普遍是弱项，建议从大二开始每天背单词\n2. 药学综合（或生理病理）平时上课认真听，期末复习资料留好，专升本很多考点和期末考重叠\n3. 高数如果基础差，建议报个线上班跟着学，自学容易走弯路\n\n【院校选择】\n- 稳妥选择：新乡医学院三全学院、黄河科技学院等民办\n- 冲刺选择：河南中医药大学、新乡医学院\n- 保底选择：各地市学院的药学专业\n\n【学习氛围】\n学校图书馆备考氛围很好，建议组队学习，互相监督。找1-2个同专业的同学一起备考，信息共享效率更高。',
+      source: 'Jade内置·南阳医专专升本',
+    },
+    {
+      id: 'edu_builtin_19', category: '信息差',
+      title: '专升本信息差：低分也能上岸的冷门技巧',
+      description: '1. 避开热门院校的热门专业，选择同档次院校的相对冷门专业，录取分数线可能低20-30分\n\n2. 有些院校第一年招某专业专升本，因为知道的人少，分数线会偏低，可以重点关注新增招生专业\n\n3. 民办院校学费贵但录取分数低，如果家庭条件允许，报民办作为保底是明智的选择\n\n4. 调剂是最后的机会，不要放弃。有些学校第一轮招不满会有补录，关注省考试院补录通知\n\n5. 专业课如果有主观题（简答、论述），一定要写满，阅卷老师会酌情给分\n\n6. 选择题不会就蒙B或C，统计上概率略高\n\n7. 考前一周不要再刷新题，把错题本和笔记再过一遍，保持手感最重要',
+      source: 'Jade内置·专升本信息差',
+    },
+    // —— 更多药学资料 ——
+    {
+      id: 'edu_builtin_20', category: '药学',
+      title: '【药学专升本】药物化学核心考点汇总',
+      description: '【抗生素类药物】\n- β-内酰胺类：青霉素类（青霉素G、阿莫西林）、头孢菌素类（一至四代）\n- 大环内酯类：红霉素、阿奇霉素、克拉霉素\n- 氨基糖苷类：链霉素、庆大霉素、阿米卡星\n- 四环素类：四环素、多西环素\n- 喹诺酮类：诺氟沙星、环丙沙星、左氧氟沙星\n\n【解热镇痛药】\n- 水杨酸类：阿司匹林（乙酰水杨酸）\n- 苯胺类：对乙酰氨基酚（扑热息痛）\n- 吡唑酮类：安乃近\n\n【心血管药物】\n- 抗高血压：卡托普利(ACEI)、缬沙坦(ARB)、硝苯地平(CCB)\n- 抗心绞痛：硝酸甘油、普萘洛尔、维拉帕米\n- 调血脂：洛伐他汀、辛伐他汀（他汀类）\n\n【消化系统药物】\n- 抗溃疡：奥美拉唑（质子泵抑制剂）、雷尼替丁（H2受体阻断药）\n- 胃黏膜保护：硫糖铝、枸橼酸铋钾\n\n重点掌握：药物分类、代表药、作用机制、临床应用、主要不良反应',
+      source: 'Jade内置·药学专升本',
+    },
+    {
+      id: 'edu_builtin_21', category: '药学',
+      title: '【药学专升本】药剂学常考简答题精选',
+      description: '1. 简述片剂的制备方法及其特点\n答：① 湿法制粒压片法：适用于对湿热稳定的药物，颗粒质量好；② 干法制粒压片法：适用于对湿热不稳定的药物；③ 直接粉末压片法：省时省力，但要求药物流动性和可压性好；④ 空白颗粒压片法：适用于剂量小的药物。\n\n2. 影响药物溶解度的因素有哪些？\n答：① 药物的分子结构（相似相溶）；② 溶剂化作用与水合作用；③ 多晶型影响（无定形溶解度最大）；④ 粒子大小（微粉化可增加溶解度）；⑤ 温度影响；⑥ pH与同离子效应；⑦ 混合溶剂（潜溶）；⑧ 添加物（助溶剂、增溶剂）。\n\n3. 简述热原的性质及除去方法\n答：热原性质：耐热性、过滤性、水溶性、不挥发性、可被吸附性、可被强酸碱破坏。\n除去方法：高温法（250℃30min以上）、酸碱法、吸附法（活性炭）、离子交换法、凝胶过滤法、反渗透法、超滤法。\n\n4. 缓释制剂与控释制剂的区别\n答：缓释制剂：按一级速率释放，血药浓度有波动；控释制剂：按零级速率释放，血药浓度平稳。',
+      source: 'Jade内置·药学专升本',
+    },
+    {
+      id: 'edu_builtin_22', category: '药学',
+      title: '【药学专升本】药理学名词解释高频考点',
+      description: '1. 首过效应（首关消除）：口服药物在胃肠道吸收后，经门静脉进入肝脏，部分药物在通过肠黏膜和肝脏时被代谢灭活，使进入体循环的药量减少。\n\n2. 生物利用度（F）：药物经血管外给药后，能被吸收进入体循环的相对分量和速度。\n\n3. 半衰期（t₁/₂）：血药浓度下降一半所需的时间，是确定给药间隔的重要依据。\n\n4. 治疗指数（TI）：半数致死量（LD₅₀）与半数有效量（ED₅₀）的比值，用以表示药物的安全性。TI越大越安全。\n\n5. 副作用：药物在治疗剂量时出现的与治疗目的无关的作用，是药物本身固有的，可预知，不可避免。\n\n6. 毒性反应：用药剂量过大或用药时间过长引起的机体损害性反应，可预知，应避免。\n\n7. 耐受性：机体在连续多次用药后反应性降低，需增加剂量才能达到原有效应。\n\n8. 耐药性（抗药性）：病原体或肿瘤细胞对反复应用的化疗药物敏感性降低。\n\n9. 抗生素后效应（PAE）：细菌与抗生素短暂接触后，当药物浓度下降至低于最低抑菌浓度或消失后，细菌生长仍受到持续抑制的效应。\n\n10. 化疗指数（CI）：评价化疗药物有效性与安全性的指标，一般用LD₅₀/ED₅₀表示。',
+      source: 'Jade内置·药学专升本',
+    },
+    {
+      id: 'edu_builtin_23', category: '药学',
+      title: '【药学专升本】天然药物化学重点结构类型',
+      description: '【糖和苷】\n- 单糖：葡萄糖、果糖、鼠李糖\n- 苷键的裂解：酸催化水解、碱催化水解、酶催化水解\n- 苷键构型确定：酶解法、NMR法\n\n【醌类化合物】\n- 苯醌、萘醌、菲醌、蒽醌\n- 蒽醌类：大黄素型、茜草素型\n- 显色反应：Feigl反应、Bornträger反应\n\n【黄酮类化合物】\n- 黄酮、黄酮醇、二氢黄酮、异黄酮、查耳酮\n- 酸性强弱：7,4\'-二OH > 7或4\'-OH > 一般酚OH > 5-OH\n- 显色反应：盐酸-镁粉反应、三氯化铝反应\n\n【萜类和挥发油】\n- 单萜（C10）、倍半萜（C15）、二萜（C20）、三萜（C30）\n- 挥发油组成：萜类化合物、芳香族化合物、脂肪族化合物\n\n【生物碱】\n- 结构类型：吡啶类、莨菪烷类、异喹啉类、吲哚类、有机胺类\n- 碱性强弱：季铵碱 > 脂肪胺 > 芳香胺 > 酰胺\n- 沉淀反应：碘化铋钾（橘红色沉淀）、碘化汞钾（类白色沉淀）',
+      source: 'Jade内置·药学专升本',
+    },
+    {
+      id: 'edu_builtin_24', category: '药学',
+      title: '【药学专升本】药事管理学必背考点',
+      description: '【药品管理法核心】\n- 假药：药品所含成份与国家药品标准规定的成份不符；以非药品冒充药品；以他种药品冒充此种药品；变质的药品；药品所标明的适应症或者功能主治超出规定范围。\n- 劣药：药品成份的含量不符合国家药品标准；被污染的药品；未标明或者更改有效期的药品；未注明或者更改产品批号的药品；超过有效期的药品；擅自添加防腐剂、辅料的药品。\n\n【处方药与非处方药分类管理】\n- 处方药（Rx）：凭执业医师或执业助理医师处方才可调配、购买和使用\n- 非处方药（OTC）：不需要凭医师处方即可自行判断、购买和使用\n- OTC分为甲类（红色，须在药店购买）和乙类（绿色，可在超市等购买）\n\n【特殊管理药品】\n- 麻醉药品：连续使用易产生身体依赖性，能成瘾癖（吗啡、哌替啶、芬太尼等）\n- 精神药品：直接作用于中枢神经系统，使之兴奋或抑制（第一类、第二类）\n- 医疗用毒性药品：毒性剧烈，治疗剂量与中毒剂量相近\n- 放射性药品：用于临床诊断或治疗的放射性核素制剂\n\n【药品不良反应（ADR）】\n- 定义：合格药品在正常用法用量下出现的与用药目的无关的有害反应\n- 分类：A型（量变型，可预测）、B型（质变型，难预测）、C型（长期用药后出现）',
+      source: 'Jade内置·药学专升本',
+    },
+    {
+      id: 'edu_builtin_25', category: '信息差',
+      title: '专升本信息差：备考时间线规划（五年制专属）',
+      description: '五年制专升本备考时间线（以河南为例）：\n\n【大二上学期 · 准备期】\n- 了解专升本政策、考试科目、目标院校\n- 开始背英语单词，每天30-50个\n- 专业课上课认真听，打好基础\n\n【大二下学期 · 基础期】\n- 英语：系统学习语法，开始做阅读\n- 高数：如果基础弱，从最基础的概念开始学\n- 专业课：跟着学校课程走，期末复习资料留好\n\n【大三上学期 · 强化期】\n- 英语：开始刷真题，重点攻克阅读和完形\n- 高数：过完一遍基础，开始分模块刷题\n- 专业课：对照考试大纲系统复习\n- 寒假是黄金备考期，一定要利用好\n\n【大三下学期 · 冲刺期】\n- 3-4月：刷真题+模拟卷，查漏补缺\n- 考前1个月：回归基础，错题本再过一遍\n- 保持心态，调整作息\n\n【关键提醒】\n五年制比三年制多两年在校时间，备考更充分是最大优势。不要等到最后一年才开始，早准备早从容。',
+      source: 'Jade内置·专升本信息差',
     },
   ],
 
@@ -569,10 +643,10 @@ const News = {
       : '';
 
     return `
-      <div class="news-card">
+      <div class="news-card" onclick="News.openDetail(${idx}, '${type}')" style="cursor:pointer;">
         <div class="flex items-start justify-between gap-2">
           <div class="news-title flex-1">${_esc(item.title || '无标题')}${builtinTag}</div>
-          <span class="${starCls}" onclick="News.toggleFavorite(${idx}, '${type}')" style="flex-shrink:0; line-height:1.4;">${star}</span>
+          <span class="${starCls}" onclick="event.stopPropagation();News.toggleFavorite(${idx}, '${type}')" style="flex-shrink:0; line-height:1.4;">${star}</span>
         </div>
         <div class="news-desc">${_esc(item.description || '')}</div>
         ${transArea}
@@ -580,7 +654,7 @@ const News = {
           <span>${_esc(item.source || '未知来源')}</span>
           ${time ? `<span>·</span><span>${time}</span>` : ''}
         </div>
-        <div class="flex gap-3 mt-2 text-[10px] text-ash">
+        <div class="flex gap-3 mt-2 text-[10px] text-ash" onclick="event.stopPropagation();">
           <button onclick="News.openNoteModal(${idx}, '${type}')" class="hover:text-ink">批注</button>
           <button onclick="News.copyContent(${idx}, '${type}')" class="hover:text-ink">复制原文</button>
           ${translateBtn}
@@ -716,6 +790,135 @@ const News = {
 
     const ok = await _copyText(text);
     Toast.show(ok ? '已复制到剪贴板' : '复制失败');
+  },
+
+  // ===== 打开详情弹窗 =====
+  openDetail(idx, type) {
+    const items = type === 'world' ? this._worldItems : this._eduItems;
+    const item = items[idx];
+    if (!item) return;
+
+    const time = this.getDisplayTime(item);
+    const builtinTag = item.isBuiltin
+      ? '<span class="inline-block text-[10px] bg-fog text-gray-500 px-2 py-0.5 rounded">内置资料</span>'
+      : '';
+    const categoryTag = item.category
+      ? '<span class="inline-block text-[10px] bg-mist text-gray-600 px-2 py-0.5 rounded ml-2">' + _esc(item.category) + '</span>'
+      : '';
+    const linkHtml = (!item.isBuiltin && item.link)
+      ? '<a href="' + _esc(item.link) + '" target="_blank" rel="noopener noreferrer" class="text-xs underline">查看原文链接 →</a>'
+      : '';
+
+    // 描述内容换行处理（保留换行符）
+    const descHtml = (item.description || '')
+      .split('\n')
+      .map(line => '<p class="mb-2">' + _esc(line) + '</p>')
+      .join('');
+
+    const html = `
+      <div class="space-y-3">
+        <div class="flex items-start justify-between gap-2">
+          <h3 class="text-base font-bold flex-1 leading-snug">${_esc(item.title || '无标题')}</h3>
+          <button onclick="News.toggleFavorite(${idx}, '${type}');News._refreshDetailStar(${idx}, '${type}')" class="star-btn text-lg shrink-0" id="detail-star-${type}-${idx}">☆</button>
+        </div>
+        <div class="text-[10px] text-ash">
+          ${builtinTag}${categoryTag}
+          <span class="ml-2">${_esc(item.source || '未知来源')}</span>
+          ${time ? '<span class="ml-2">· ' + time + '</span>' : ''}
+        </div>
+        <div class="border-t border-fog pt-3 text-sm leading-relaxed text-gray-700 max-h-[50vh] overflow-y-auto">
+          ${descHtml || '<p class="text-ash">暂无详细内容</p>'}
+        </div>
+        <div class="flex gap-2 pt-2 border-t border-fog">
+          <button onclick="News.openNoteModal(${idx}, '${type}')" class="btn-secondary flex-1 text-xs py-2">批注</button>
+          <button onclick="News.copyContent(${idx}, '${type}')" class="btn-secondary flex-1 text-xs py-2">复制</button>
+          ${type === 'world' ? '<button onclick="News._detailTranslate(' + idx + ', \'' + type + '\')" class="btn-secondary flex-1 text-xs py-2" id="detail-trans-btn-' + type + '-' + idx + '">译中文</button>' : ''}
+        </div>
+        ${linkHtml ? '<div class="text-center pt-1">' + linkHtml + '</div>' : ''}
+      </div>
+    `;
+    Modal.open(html);
+
+    // 更新收藏星星状态
+    this._refreshDetailStar(idx, type);
+  },
+
+  _refreshDetailStar(idx, type) {
+    const items = type === 'world' ? this._worldItems : this._eduItems;
+    const item = items[idx];
+    if (!item) return;
+    this.findFavorite(item, type).then(fav => {
+      const starEl = document.getElementById('detail-star-' + type + '-' + idx);
+      if (starEl) {
+        if (fav) {
+          starEl.textContent = '★';
+          starEl.classList.add('active');
+        } else {
+          starEl.textContent = '☆';
+          starEl.classList.remove('active');
+        }
+      }
+    });
+  },
+
+  async _detailTranslate(idx, type) {
+    const btn = document.getElementById('detail-trans-btn-' + type + '-' + idx);
+    if (!btn) return;
+    const items = type === 'world' ? this._worldItems : this._eduItems;
+    const item = items[idx];
+    if (!item) return;
+
+    btn.textContent = '翻译中...';
+    btn.disabled = true;
+
+    try {
+      const textToTranslate = (item.title || '') + '\n' + (item.description || '');
+      const translated = await this._translateText(textToTranslate, 'en', 'zh-CN');
+      if (translated) {
+        // 在详情中显示翻译结果
+        const lines = translated.split('\n');
+        const transTitle = lines[0] || '';
+        const transDesc = lines.slice(1).join('\n') || '';
+        const descHtml = transDesc
+          .split('\n')
+          .map(line => '<p class="mb-2">' + _esc(line) + '</p>')
+          .join('');
+
+        const modalContent = document.getElementById('modal-content');
+        if (modalContent) {
+          const existingTrans = modalContent.querySelector('.detail-trans-area');
+          if (existingTrans) {
+            existingTrans.innerHTML = `
+              <div class="text-[11px] text-ash mb-1">中文翻译</div>
+              <div class="text-sm font-medium text-ink mb-1">${_esc(transTitle)}</div>
+              <div class="text-xs text-gray-600 leading-relaxed">${descHtml}</div>
+            `;
+            existingTrans.classList.remove('hidden');
+          } else {
+            const contentArea = modalContent.querySelector('.border-t');
+            if (contentArea) {
+              const transDiv = document.createElement('div');
+              transDiv.className = 'detail-trans-area mt-3 pt-3 border-t border-fog';
+              transDiv.innerHTML = `
+                <div class="text-[11px] text-ash mb-1">中文翻译</div>
+                <div class="text-sm font-medium text-ink mb-1">${_esc(transTitle)}</div>
+                <div class="text-xs text-gray-600 leading-relaxed">${descHtml}</div>
+              `;
+              contentArea.parentNode.insertBefore(transDiv, contentArea.nextSibling);
+            }
+          }
+        }
+        btn.textContent = '已翻译';
+      } else {
+        Toast.show('翻译失败，请稍后重试');
+        btn.textContent = '译中文';
+      }
+    } catch (e) {
+      console.warn('Detail translate error:', e);
+      Toast.show('翻译失败：' + e.message);
+      btn.textContent = '译中文';
+    }
+    btn.disabled = false;
   },
 
   // ===== 翻译为中文 =====

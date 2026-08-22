@@ -20,19 +20,17 @@ const Todo = {
     const upcoming = todos.filter(t => (t.date || today) >= today);
     const overdue = todos.filter(t => (t.date || today) < today);
 
-    // 今日及未来：日期升序；同日内未完成在前、已完成在后
+    // 今日及未来：日期升序（今日在最前，然后是明天、后天...）；同日内按创建时间升序，不区分完成状态
     upcoming.sort((a, b) => {
       const da = a.date || today, db = b.date || today;
       if (da !== db) return da.localeCompare(db);
-      if (!!a.completed !== !!b.completed) return a.completed ? 1 : -1;
       return (a.createdAt || '').localeCompare(b.createdAt || '');
     });
 
-    // 历史：日期降序（越近越靠上）
+    // 历史：日期降序（越近越靠上）；同日内按创建时间升序，不区分完成状态
     overdue.sort((a, b) => {
       const da = a.date || today, db = b.date || today;
       if (da !== db) return db.localeCompare(da);
-      if (!!a.completed !== !!b.completed) return a.completed ? 1 : -1;
       return (a.createdAt || '').localeCompare(b.createdAt || '');
     });
 

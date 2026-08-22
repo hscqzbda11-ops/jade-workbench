@@ -1,8 +1,12 @@
 /* ===== Jade 工作台 核心应用 ===== */
 
-// 日期工具
+// 日期工具 - 全部使用本地时间，避免时区导致日期偏移
 const DateUtil = {
-  today: () => new Date().toISOString().slice(0, 10),
+  today() {
+    const d = new Date();
+    const p = n => String(n).padStart(2, '0');
+    return `${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())}`;
+  },
   fmt(d) {
     const dt = new Date(d);
     return `${dt.getFullYear()}年${dt.getMonth()+1}月${dt.getDate()}日`;
@@ -70,7 +74,7 @@ const Toast = {
 const Calendar = {
   year: new Date().getFullYear(),
   month: new Date().getMonth(),
-  selected: new Date().toISOString().slice(0, 10),
+  selected: (() => { const d = new Date(); const p = n => String(n).padStart(2,'0'); return `${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())}`; })(),
 
   prev() {
     this.month--;

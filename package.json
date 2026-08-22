@@ -1,0 +1,23 @@
+{
+  "name": "jade-workbench",
+  "version": "1.0.0",
+  "description": "Jade手机工作台 - 全自动实时资讯移动端PWA",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "better-sqlite3": "^11.3.0",
+    "cors": "^2.8.5",
+    "express": "^4.21.0",
+    "https-proxy-agent": "^9.1.0",
+    "localtunnel": "^2.0.2",
+    "node-cron": "^3.0.3",
+    "rss-parser": "^3.13.0"
+  },
+  "devDependencies": {
+    "node-pty": "^1.1.0",
+    "sharp": "^0.35.3"
+  }
+}

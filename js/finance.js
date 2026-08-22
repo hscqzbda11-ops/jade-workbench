@@ -96,6 +96,24 @@ const Finance = {
     if (el1) el1.textContent = this.fmtMoney(sum('risk'));
     if (el2) el2.textContent = this.fmtMoney(sum('fixed'));
     if (el3) el3.textContent = this.fmtMoney(sum('daily'));
+
+    // 日常花销：计算本月已花和剩余
+    const budgetInfo = document.getElementById('daily-budget-info');
+    if (budgetInfo) {
+      const dailyBudget = sum('daily');
+      const records = await Store.getAll('finance_records');
+      const now = new Date();
+      const ym = now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0');
+      const monthExpense = records
+        .filter(r => r.type === 'expense' && r.date && r.date.startsWith(ym))
+        .reduce((s, r) => s + (Number(r.amount) || 0), 0);
+      const remaining = dailyBudget - monthExpense;
+      if (dailyBudget > 0) {
+        budgetInfo.textContent = '已花' + this.fmtMoney(monthExpense) + ' · 剩' + this.fmtMoney(remaining);
+      } else {
+        budgetInfo.textContent = '点击 + 设置本月预算';
+      }
+    }
   },
 
   /* ---------- 2/3/4. 伸缩编辑面板 ---------- */
@@ -253,10 +271,16 @@ const Finance = {
       const rows = items.length === 0
         ? '<div class="text-[10px] text-ash py-1">暂无</div>'
         : items.map(a =>
-            '<div class="flex justify-between text-xs py-1">' +
-              '<span class="truncate pr-2">' + this._esc(a.name) +
-                (a.note ? ' <span class="text-ash">· ' + this._esc(a.note) + '</span>' : '') + '</span>' +
-              '<span class="text-ash shrink-0">' + this.fmtMoney(a.amount) + '</span>' +
+            '<div class="flex justify-between items-center text-xs py-1">' +
+              '<div class="flex-1 min-w-0 pr-2">' +
+                '<span class="truncate">' + this._esc(a.name) +
+                  (a.note ? ' <span class="text-ash">· ' + this._esc(a.note) + '</span>' : '') + '</span>' +
+              '</div>' +
+              '<div class="flex items-center gap-1 shrink-0">' +
+                '<span class="text-ash">' + this.fmtMoney(a.amount) + '</span>' +
+                '<button onclick="Finance.openEditAsset(' + a.id + ')" class="mini-plus">✎</button>' +
+                '<button onclick="Finance.deleteAsset(' + a.id + ')" class="mini-plus">×</button>' +
+              '</div>' +
             '</div>'
           ).join('');
       return '<div class="bg-white rounded-xl p-3 shadow-sm">' +

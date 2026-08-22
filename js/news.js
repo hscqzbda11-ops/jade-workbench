@@ -552,6 +552,16 @@ const News = {
       ? `<a href="${_esc(item.link)}" target="_blank" rel="noopener noreferrer" class="hover:text-ink">查看原文</a>`
       : '';
 
+    // 翻译按钮（仅我与世界显示）
+    const translateBtn = type === 'world'
+      ? `<button onclick="News.translateItem(${idx}, '${type}')" class="hover:text-ink" id="trans-btn-${type}-${idx}">译中文</button>`
+      : '';
+
+    // 翻译结果区域
+    const transArea = type === 'world'
+      ? `<div class="trans-result hidden" id="trans-result-${type}-${idx}"></div>`
+      : '';
+
     return `
       <div class="news-card">
         <div class="flex items-start justify-between gap-2">
@@ -559,6 +569,7 @@ const News = {
           <span class="${starCls}" onclick="News.toggleFavorite(${idx}, '${type}')" style="flex-shrink:0; line-height:1.4;">${star}</span>
         </div>
         <div class="news-desc">${_esc(item.description || '')}</div>
+        ${transArea}
         <div class="news-meta">
           <span>${_esc(item.source || '未知来源')}</span>
           ${time ? `<span>·</span><span>${time}</span>` : ''}
@@ -566,6 +577,7 @@ const News = {
         <div class="flex gap-3 mt-2 text-[10px] text-ash">
           <button onclick="News.openNoteModal(${idx}, '${type}')" class="hover:text-ink">批注</button>
           <button onclick="News.copyContent(${idx}, '${type}')" class="hover:text-ink">复制原文</button>
+          ${translateBtn}
           ${linkHtml}
         </div>
       </div>
@@ -698,5 +710,110 @@ const News = {
 
     const ok = await _copyText(text);
     Toast.show(ok ? '已复制到剪贴板' : '复制失败');
+  },
+
+  // ===== 翻译为中文 =====
+  _transCache: {}, // 翻译缓存
+
+  async translateItem(idx, type) {
+    const items = type === 'world' ? this._worldItems : this._eduItems;
+    const item = items[idx];
+    if (!item) return;
+
+    const btn = document.getElementById('trans-btn-' + type + '-' + idx);
+    const resultEl = document.getElementById('trans-result-' + type + '-' + idx);
+    if (!btn || !resultEl) return;
+
+    // 切换显示/隐藏
+    if (!resultEl.classList.contains('hidden') && resultEl.innerHTML) {
+      resultEl.classList.add('hidden');
+      btn.textContent = '译中文';
+      return;
+    }
+
+    // 检查缓存
+    const cacheKey = type + '_' + idx;
+    if (this._transCache[cacheKey]) {
+      resultEl.innerHTML = this._transCache[cacheKey];
+      resultEl.classList.remove('hidden');
+      btn.textContent = '收起翻译';
+      return;
+    }
+
+    btn.textContent = '翻译中...';
+    btn.disabled = true;
+
+    try {
+      // 合并标题和描述进行翻译
+      const textToTranslate = (item.title || '') + '\n' + (item.description || '');
+      const translated = await this._translateText(textToTranslate, 'en', 'zh-CN');
+      
+      if (translated) {
+        const lines = translated.split('\n');
+        const transTitle = lines[0] || '';
+        const transDesc = lines.slice(1).join('\n') || '';
+        
+        const html = `
+          <div class="mt-2 pt-2 border-t border-fog">
+            <div class="text-[11px] text-ash mb-1">中文翻译</div>
+            <div class="text-sm font-medium text-ink mb-1">${_esc(transTitle)}</div>
+            <div class="text-xs text-gray-600 leading-relaxed">${_esc(transDesc)}</div>
+          </div>
+        `;
+        this._transCache[cacheKey] = html;
+        resultEl.innerHTML = html;
+        resultEl.classList.remove('hidden');
+        btn.textContent = '收起翻译';
+      } else {
+        Toast.show('翻译失败，请稍后重试');
+        btn.textContent = '译中文';
+      }
+    } catch (e) {
+      console.warn('Translate error:', e);
+      Toast.show('翻译失败：' + e.message);
+      btn.textContent = '译中文';
+    }
+    
+    btn.disabled = false;
+  },
+
+  // 使用 MyMemory 免费翻译 API
+  async _translateText(text, from, to) {
+    if (!text || !text.trim()) return '';
+    
+    const url = 'https://api.mymemory.translated.net/get?q=' + 
+      encodeURIComponent(text.substring(0, 500)) + 
+      '&langpair=' + from + '|' + to;
+    
+    try {
+      const res = await fetch(url, { signal: AbortSignal.timeout(15000) });
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      const data = await res.json();
+      if (data && data.responseData && data.responseData.translatedText) {
+        return data.responseData.translatedText;
+      }
+      throw new Error('无翻译结果');
+    } catch (e) {
+      // 备用：尝试另一个免费 API
+      try {
+        return await this._translateBackup(text, from, to);
+      } catch (e2) {
+        throw e;
+      }
+    }
+  },
+
+  // 备用翻译 API
+  async _translateBackup(text, from, to) {
+    const url = 'https://translate.googleapis.com/translate_a/single?client=gtx&sl=' + 
+      from + '&tl=' + to + '&dt=t&q=' + encodeURIComponent(text.substring(0, 500));
+    
+    const res = await fetch(url, { signal: AbortSignal.timeout(15000) });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const data = await res.json();
+    if (data && data[0] && Array.isArray(data[0])) {
+      return data[0].map(item => item[0]).join('');
+    }
+    throw new Error('无翻译结果');
   },
 };

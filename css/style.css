@@ -166,6 +166,14 @@ input[type="date"]{ min-height:38px; }
   -webkit-box-orient:vertical;
   overflow:hidden;
 }
+.trans-result.hidden{display:none;}
+.trans-result{
+  animation:fadeIn .2s ease;
+}
+@keyframes fadeIn{
+  from{opacity:0;transform:translateY(-4px);}
+  to{opacity:1;transform:translateY(0);}
+}
 .news-meta{
   display:flex;
   align-items:center;

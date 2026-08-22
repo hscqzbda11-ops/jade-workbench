@@ -67,22 +67,13 @@ tailwind.config = {
   <!-- 快捷入口 -->
   <div class="px-4 mb-5">
     <h2 class="text-sm font-semibold text-gray-700 mb-2">快捷入口</h2>
-    <div class="grid grid-cols-3 gap-3">
+    <div class="grid grid-cols-2 gap-3">
       <button onclick="Nav.go('finance');Finance.openAddRecord()" class="bg-white rounded-2xl py-4 flex flex-col items-center gap-1 shadow-sm active:scale-95 transition">
         <span class="text-2xl">$</span><span class="text-xs font-medium">理财记账</span>
       </button>
       <button onclick="Nav.go('todo');Todo.openAdd()" class="bg-white rounded-2xl py-4 flex flex-col items-center gap-1 shadow-sm active:scale-95 transition">
         <span class="text-2xl">✓</span><span class="text-xs font-medium">任务清单</span>
       </button>
-      <div class="bg-fog rounded-2xl py-4 flex flex-col items-center gap-1 opacity-40">
-        <span class="text-2xl text-ash">+</span><span class="text-xs text-ash">待定</span>
-      </div>
-      <div class="bg-fog rounded-2xl py-4 flex flex-col items-center gap-1 opacity-40">
-        <span class="text-2xl text-ash">+</span><span class="text-xs text-ash">待定</span>
-      </div>
-      <div class="bg-fog rounded-2xl py-4 flex flex-col items-center gap-1 opacity-40">
-        <span class="text-2xl text-ash">+</span><span class="text-xs text-ash">待定</span>
-      </div>
     </div>
   </div>
 

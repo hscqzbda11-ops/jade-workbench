@@ -327,6 +327,36 @@ const News = {
       description: '五年制专升本备考时间线（以河南为例）：\n\n【大二上学期 · 准备期】\n- 了解专升本政策、考试科目、目标院校\n- 开始背英语单词，每天30-50个\n- 专业课上课认真听，打好基础\n\n【大二下学期 · 基础期】\n- 英语：系统学习语法，开始做阅读\n- 高数：如果基础弱，从最基础的概念开始学\n- 专业课：跟着学校课程走，期末复习资料留好\n\n【大三上学期 · 强化期】\n- 英语：开始刷真题，重点攻克阅读和完形\n- 高数：过完一遍基础，开始分模块刷题\n- 专业课：对照考试大纲系统复习\n- 寒假是黄金备考期，一定要利用好\n\n【大三下学期 · 冲刺期】\n- 3-4月：刷真题+模拟卷，查漏补缺\n- 考前1个月：回归基础，错题本再过一遍\n- 保持心态，调整作息\n\n【关键提醒】\n五年制比三年制多两年在校时间，备考更充分是最大优势。不要等到最后一年才开始，早准备早从容。',
       source: 'Jade内置·专升本信息差',
     },
+    {
+      id: 'edu_builtin_26', category: '信息差',
+      title: '2029年专升本：你现在该做什么（五年制大二专属）',
+      description: '【你现在的位置】\n2026年8月，五年制大二，距离2029年专升本考试还有约2年8个月。时间充裕，但也不能浪费。\n\n【2026年下半年（大二上）目标】\n1. 英语：搞定基础词汇，目标词汇量2500+。每天背40个单词，用APP（百词斩、墨墨）都可以\n2. 高数：把课本上的基础概念过一遍，不用刷题，理解为主\n3. 专业课：跟着学校课程走，期末认真复习，把笔记和复习资料保存好\n4. 信息收集：关注河南省教育考试院公众号，了解最新政策\n\n【2027年（大三）目标】\n- 上学期：英语系统学语法，高数过完一遍基础\n- 下学期：开始刷英语真题阅读，高数分模块刷题\n- 暑假：黄金备考期，报班或自学强化\n\n【2028年（大四）目标】\n- 全面进入冲刺阶段，刷真题、模拟卷\n- 专业课重点突破\n\n【2029年（大五）目标】\n- 3-4月最后冲刺\n- 4月考试\n\n记住：专升本是选拔性考试，不是过线就行，分越高选择越多。',
+      source: 'Jade内置·2029专升本备考',
+    },
+    {
+      id: 'edu_builtin_27', category: '学习资料',
+      title: '【2029专升本】英语全年备考计划（五年制版）',
+      description: '【当前阶段（大二）：打基础】\n- 词汇：每天40个，用艾宾浩斯遗忘曲线复习。一年后词汇量争取达到3500+\n- 语法：系统学习五大基本句型、时态、语态、从句。推荐看B站免费语法课\n- 阅读：从简单的短文开始，每周2-3篇。不求速度，力求每个句子都看懂\n\n【中期阶段（大三）：强化训练】\n- 词汇：复习+拓展，目标4000+\n- 阅读：开始做真题阅读，每天1-2篇，做完精读分析\n- 完形填空：掌握常见搭配和上下文逻辑\n- 翻译：每周练2-3篇英译汉\n- 作文：开始积累模板和好词好句\n\n【冲刺阶段（大四）：真题实战】\n- 近10年真题至少刷3遍\n- 作文模板熟练背诵，每周写1-2篇练手\n- 保持每天做题的手感\n\n【英语提分关键】\n1. 单词是基础，每天都要背，直到考前\n2. 阅读占分最多，得阅读者得天下\n3. 作文是最容易短期提分的，模板一定要背熟\n4. 完形填空性价比低，不用花太多时间',
+      source: 'Jade内置·专升本英语',
+    },
+    {
+      id: 'edu_builtin_28', category: '学习资料',
+      title: '【2029专升本】高数全年备考计划（五年制版）',
+      description: '【高数考试范围（河南专升本）】\n- 函数、极限与连续\n- 一元函数微分学\n- 一元函数积分学\n- 常微分方程\n- 向量代数与空间解析几何\n- 多元函数微分学\n- 多元函数积分学\n- 无穷级数\n\n【当前阶段（大二）：预习打基础】\n- 如果学校有高数课，上课认真听\n- 没有的话找网课自学，推荐B站"宋浩"老师的高等数学\n- 重点：极限、导数、积分是重中之重，占分最多\n- 不用追求刷题量，理解概念和基本方法为主\n\n【中期阶段（大三）：系统学习】\n- 按考试大纲一章一章过\n- 每章学完做配套练习题\n- 准备错题本，错题反复做\n- 寒假进行第一轮总复习\n\n【冲刺阶段（大四）：真题+模拟】\n- 近10年真题刷3遍以上\n- 模拟考试，控制时间\n- 查漏补缺，薄弱章节重点突破\n\n【高数提分关键】\n1. 基础不牢，地动山摇。公式一定要记熟\n2. 多做题，数学是练出来的不是看出来的\n3. 错题本比刷新题更重要\n4. 考试时选择题不会就蒙，大题写步骤也有步骤分',
+      source: 'Jade内置·专升本高数',
+    },
+    {
+      id: 'edu_builtin_29', category: '药学',
+      title: '【药学专升本】生理病理学备考指南',
+      description: '【生理学重点章节】\n1. 绪论：内环境与稳态、生理功能调节\n2. 细胞的基本功能：物质跨膜转运、生物电现象、肌细胞收缩\n3. 血液：血液组成与功能、血细胞生理、血液凝固与抗凝\n4. 血液循环：心脏泵血、心肌生物电、血管生理、心血管活动调节\n5. 呼吸：肺通气、肺换气、气体运输、呼吸运动调节\n6. 消化与吸收：胃肠运动、消化液分泌、吸收\n7. 能量代谢与体温\n8. 尿的生成与排出：肾小球滤过、肾小管重吸收、尿生成调节\n9. 神经系统：突触传递、神经系统感觉功能、神经系统对躯体运动调节\n10. 内分泌：下丘脑与垂体、甲状腺、肾上腺、胰岛\n\n【病理学重点章节】\n1. 细胞和组织的适应与损伤：萎缩、肥大、增生、化生；变性、坏死、凋亡\n2. 损伤的修复：再生、纤维性修复、创伤愈合\n3. 局部血液循环障碍：充血、出血、血栓形成、栓塞、梗死\n4. 炎症：炎症概述、急性炎症、慢性炎症\n5. 肿瘤：肿瘤的概念、形态、异型性、生长扩散、命名分类、良恶性区别\n6. 心血管系统疾病：动脉粥样硬化、高血压、风湿病、感染性心内膜炎\n7. 呼吸系统疾病：肺炎、慢性阻塞性肺疾病、肺癌\n8. 消化系统疾病：胃炎、消化性溃疡、病毒性肝炎、肝硬化、消化系统肿瘤\n9. 泌尿系统疾病：肾小球肾炎、肾盂肾炎、泌尿系统肿瘤\n10. 生殖系统和乳腺疾病\n11. 内分泌系统疾病：糖尿病、甲状腺疾病\n12. 神经系统疾病\n\n【备考建议】\n- 生理学重在理解机制，病理学重在形态和病变特点\n- 两者关联紧密，建议结合着学\n- 多画图、多对比、多总结',
+      source: 'Jade内置·药学专升本',
+    },
+    {
+      id: 'edu_builtin_30', category: '信息差',
+      title: '南阳医专药学专升本：上岸学长的真心话',
+      description: '【关于南阳医专】\n南阳医专的药学专业在河南省内专科里算不错的，师资和实验条件都可以。学校对专升本也比较支持，图书馆常年有很多备考的同学。\n\n【药学专升本考什么（河南）】\n- 公共英语（150分）\n- 生理病理学（150分）或 药学综合（以当年政策为准）\n- 总分300分\n\n【真实的录取情况】\n- 公办院校（河南中医药大学、新乡医学院等）：分数要求较高，一般需要200+才有把握\n- 民办院校（新乡医学院三全学院、黄河科技学院等）：分数相对低一些，150-180左右有希望\n- 每年分数线波动，受招生计划和报考人数影响\n\n【给学弟学妹的建议】\n1. 英语真的很重要，五年制的同学普遍英语基础弱，这恰恰是你逆袭的机会\n2. 专业课（生理病理/药学综合）你比非医学专业的学生有优势，因为学校里都学过\n3. 不要轻信包过班、保录班，都是智商税\n4. 找1-2个靠谱的研友，互相监督比一个人强\n5. 大二开始准备完全来得及，但不要拖延\n6. 真题是最好的复习资料，没有之一\n7. 坚持到最后就赢了一半，每年都有很多人中途放弃',
+      source: 'Jade内置·南阳医专学长经验',
+    },
   ],
 
   // ===== 预加载 =====
@@ -335,6 +365,64 @@ const News = {
       this.loadWorld().catch(e => console.error('世界资讯预加载失败', e)),
       this.loadEdu().catch(e => console.error('专升本资讯预加载失败', e)),
     ]);
+  },
+
+  // ===== 绑定事件委托（解决 Safari 点击失效问题） =====
+  bindEvents() {
+    // 世界资讯列表
+    const worldList = document.getElementById('world-news-list');
+    if (worldList) {
+      worldList.addEventListener('click', (e) => this._handleCardClick(e, 'world'));
+    }
+    // 专升本资讯列表
+    const eduList = document.getElementById('edu-content');
+    if (eduList) {
+      eduList.addEventListener('click', (e) => this._handleCardClick(e, 'edu'));
+    }
+  },
+
+  _handleCardClick(e, defaultType) {
+    const target = e.target;
+
+    // 查找最近的操作按钮
+    const actionEl = target.closest('.news-action');
+    if (actionEl) {
+      const action = actionEl.dataset.action;
+      const idx = parseInt(actionEl.dataset.idx);
+      const type = actionEl.dataset.type || defaultType;
+      if (isNaN(idx)) return;
+
+      switch (action) {
+        case 'fav':
+          this.toggleFavorite(idx, type);
+          break;
+        case 'note':
+          this.openNoteModal(idx, type);
+          break;
+        case 'copy':
+          this.copyContent(idx, type);
+          break;
+        case 'translate':
+          this.translateItem(idx, type);
+          break;
+      }
+      return;
+    }
+
+    // 如果点击了链接，直接放行
+    if (target.closest('.news-link') || target.tagName === 'A') {
+      return;
+    }
+
+    // 查找最近的卡片，打开详情
+    const card = target.closest('.news-card-item');
+    if (card) {
+      const idx = parseInt(card.dataset.idx);
+      const type = card.dataset.type || defaultType;
+      if (!isNaN(idx)) {
+        this.openDetail(idx, type);
+      }
+    }
   },
 
   // ===== 加载世界资讯 =====
@@ -487,16 +575,25 @@ const News = {
 
     const timeEl = document.getElementById('edu-update-time');
     if (timeEl) {
+      // 计算 2029 年专升本倒计时（假设2029年4月15日考试，以河南为例）
+      const examDate = new Date(2029, 3, 15); // 4月15日
+      const now = new Date();
+      const daysLeft = Math.ceil((examDate - now) / (1000 * 60 * 60 * 24));
+      let countdownText = '';
+      if (daysLeft > 0) {
+        countdownText = '距2029专升本约' + daysLeft + '天 · ';
+      }
+      
       if (this.eduCache.time) {
-        timeEl.textContent = '更新于 ' + DateUtil.fmtFull(this.eduCache.time) + ' · 点击刷新';
+        timeEl.textContent = countdownText + '更新于 ' + DateUtil.fmtFull(this.eduCache.time) + ' · 点击刷新';
         timeEl.style.cursor = 'pointer';
         timeEl.onclick = () => { Toast.show('正在刷新...'); this.loadEdu(); };
       } else if (!this.eduLoaded) {
-        timeEl.textContent = '正在加载...';
+        timeEl.textContent = countdownText + '正在加载...';
         timeEl.style.cursor = 'default';
         timeEl.onclick = null;
       } else {
-        timeEl.textContent = '暂无数据';
+        timeEl.textContent = countdownText + '暂无数据';
         timeEl.style.cursor = 'default';
         timeEl.onclick = null;
       }
@@ -629,12 +726,12 @@ const News = {
       ? '<span class="inline-block text-[9px] bg-fog text-gray-500 px-1.5 py-0.5 rounded ml-1 align-middle">内置</span>'
       : '';
     const linkHtml = (!item.isBuiltin && item.link)
-      ? `<a href="${_esc(item.link)}" target="_blank" rel="noopener noreferrer" class="hover:text-ink">查看原文</a>`
+      ? `<a href="${_esc(item.link)}" target="_blank" rel="noopener noreferrer" class="hover:text-ink news-link">查看原文</a>`
       : '';
 
     // 翻译按钮（仅我与世界显示）
     const translateBtn = type === 'world'
-      ? `<button onclick="News.translateItem(${idx}, '${type}')" class="hover:text-ink" id="trans-btn-${type}-${idx}">译中文</button>`
+      ? `<button class="news-action" data-action="translate" data-idx="${idx}" data-type="${type}" id="trans-btn-${type}-${idx}">译中文</button>`
       : '';
 
     // 翻译结果区域
@@ -643,10 +740,10 @@ const News = {
       : '';
 
     return `
-      <div class="news-card" onclick="News.openDetail(${idx}, '${type}')" style="cursor:pointer;">
+      <div class="news-card news-card-item" data-idx="${idx}" data-type="${type}">
         <div class="flex items-start justify-between gap-2">
           <div class="news-title flex-1">${_esc(item.title || '无标题')}${builtinTag}</div>
-          <span class="${starCls}" onclick="event.stopPropagation();News.toggleFavorite(${idx}, '${type}')" style="flex-shrink:0; line-height:1.4;">${star}</span>
+          <span class="${starCls} news-action" data-action="fav" data-idx="${idx}" data-type="${type}" style="flex-shrink:0; line-height:1.4;">${star}</span>
         </div>
         <div class="news-desc">${_esc(item.description || '')}</div>
         ${transArea}
@@ -654,9 +751,9 @@ const News = {
           <span>${_esc(item.source || '未知来源')}</span>
           ${time ? `<span>·</span><span>${time}</span>` : ''}
         </div>
-        <div class="flex gap-3 mt-2 text-[10px] text-ash" onclick="event.stopPropagation();">
-          <button onclick="News.openNoteModal(${idx}, '${type}')" class="hover:text-ink">批注</button>
-          <button onclick="News.copyContent(${idx}, '${type}')" class="hover:text-ink">复制原文</button>
+        <div class="flex gap-3 mt-2 text-[10px] text-ash">
+          <button class="news-action" data-action="note" data-idx="${idx}" data-type="${type}">批注</button>
+          <button class="news-action" data-action="copy" data-idx="${idx}" data-type="${type}">复制原文</button>
           ${translateBtn}
           ${linkHtml}
         </div>

@@ -225,6 +225,8 @@ const App = {
       await Home.render();
       // 预加载新闻
       News.preload();
+      // 绑定资讯卡片点击事件（事件委托方式，兼容 Safari）
+      News.bindEvents();
       // 定期刷新首页数据
       setInterval(() => { if (Nav.current === 'home') Home.renderStats(); }, 60000);
     } catch (e) {

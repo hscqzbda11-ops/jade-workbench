@@ -14,7 +14,7 @@
 <meta name="apple-touch-fullscreen" content="yes">
 <meta name="format-detection" content="telephone=no">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
-<link rel="manifest" href="manifest.json?v=8">
+<link rel="manifest" href="manifest.json?v=9">
 <meta name="theme-color" content="#000000">
 <link rel="icon" href="icons/favicon.svg" type="image/svg+xml">
 <!-- Tailwind CDN -->
@@ -30,7 +30,7 @@ tailwind.config = {
   }
 }
 </script>
-<link rel="stylesheet" href="css/style.css?v=8">
+<link rel="stylesheet" href="css/style.css?v=9">
 </head>
 <body class="bg-paper text-ink font-sans">
 
@@ -105,19 +105,23 @@ tailwind.config = {
     <div id="latest-activity" class="space-y-2"></div>
   </div>
 
-  <!-- 数据管理 -->
+  <!-- 数据安全 -->
   <div class="px-4 mb-6">
-    <h2 class="text-sm font-semibold text-gray-700 mb-2">数据管理</h2>
+    <h2 class="text-sm font-semibold text-gray-700 mb-2">数据安全</h2>
+    <button onclick="exportData()" class="w-full bg-ink text-white rounded-2xl py-4 shadow-sm active:scale-95 transition mb-3">
+      <div class="text-base font-bold">📦 一键保存全部数据</div>
+      <div class="text-[10px] text-gray-400 mt-0.5">导出待办·理财·收藏·批注 所有数据到文件</div>
+    </button>
     <div class="flex gap-3">
-      <button onclick="exportData()" class="flex-1 bg-white rounded-2xl py-3 shadow-sm active:scale-95 transition">
-        <div class="text-lg mb-0.5">⬇</div>
-        <div class="text-[10px] text-ash">导出备份</div>
-      </button>
       <label class="flex-1 bg-white rounded-2xl py-3 shadow-sm active:scale-95 transition cursor-pointer">
-        <div class="text-lg mb-0.5 text-center">⬆</div>
-        <div class="text-[10px] text-ash text-center">导入恢复</div>
+        <div class="text-sm font-medium text-center">📥 导入恢复</div>
+        <div class="text-[10px] text-ash text-center mt-0.5">从备份文件恢复数据</div>
         <input type="file" accept=".json" class="hidden" onchange="importDataFromFile(this.files[0]);this.value=''">
       </label>
+      <button onclick="App.clearAllData()" class="flex-1 bg-white rounded-2xl py-3 shadow-sm active:scale-95 transition">
+        <div class="text-sm font-medium text-center text-red-500">🗑 清空数据</div>
+        <div class="text-[10px] text-ash text-center mt-0.5">谨慎操作，不可恢复</div>
+      </button>
     </div>
   </div>
 </section>
@@ -299,15 +303,15 @@ tailwind.config = {
 <div id="toast" class="hidden fixed top-20 left-1/2 -translate-x-1/2 bg-ink text-white px-4 py-2 rounded-xl text-xs z-[200]"></div>
 
 <!-- ========== Scripts ========== -->
-<script src="js/storage.js?v=8"></script>
-<script src="js/app.js?v=8"></script>
-<script src="js/todo.js?v=8"></script>
-<script src="js/finance.js?v=8"></script>
-<script src="js/news.js?v=8"></script>
-<script src="js/favorites.js?v=8"></script>
+<script src="js/storage.js?v=9"></script>
+<script src="js/app.js?v=9"></script>
+<script src="js/todo.js?v=9"></script>
+<script src="js/finance.js?v=9"></script>
+<script src="js/news.js?v=9"></script>
+<script src="js/favorites.js?v=9"></script>
 <script>
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('sw.js?v=8').catch(()=>{});
+  navigator.serviceWorker.register('sw.js?v=9').catch(()=>{});
 }
 App.init();
 </script>

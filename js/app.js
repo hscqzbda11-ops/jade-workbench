@@ -202,18 +202,27 @@ async function exportData() {
   const a = document.createElement('a');
   a.href = url;
   a.download = `jade-backup-${DateUtil.today()}.json`;
+  document.body.appendChild(a);
   a.click();
+  document.body.removeChild(a);
   URL.revokeObjectURL(url);
-  Toast.show('数据已导出');
+  Toast.show('✓ 全部数据已保存到文件');
 }
 
 // 数据导入
 async function importDataFromFile(file) {
-  const text = await file.text();
-  const data = JSON.parse(text);
-  await Store.importData(data);
-  Toast.show('数据已导入');
-  Home.render();
+  try {
+    const text = await file.text();
+    const data = JSON.parse(text);
+    await Store.importData(data);
+    Toast.show('✓ 数据已恢复');
+    Home.render();
+    if (Nav.current === 'finance') Finance.render();
+    if (Nav.current === 'todo') Todo.render();
+    if (Nav.current === 'fav') Favorites.render();
+  } catch (e) {
+    Toast.show('导入失败：文件格式错误');
+  }
 }
 
 // 应用初始化
@@ -232,6 +241,22 @@ const App = {
     } catch (e) {
       console.error('初始化失败', e);
       Toast.show('初始化失败: ' + e.message);
+    }
+  },
+
+  // 清空全部数据
+  async clearAllData() {
+    if (!confirm('确定要清空所有数据吗？\n\n待办、理财记录、收藏、批注等全部数据都会被删除，且不可恢复！')) return;
+    if (!confirm('真的确定吗？此操作无法撤销！')) return;
+    try {
+      await Store.clearAll();
+      Toast.show('数据已清空');
+      Home.render();
+      Finance.render();
+      Todo.render();
+      Favorites.render();
+    } catch (e) {
+      Toast.show('清空失败：' + e.message);
     }
   }
 };

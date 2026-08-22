@@ -112,6 +112,17 @@ const Store = (() => {
     }
   }
 
+  // 清空所有数据
+  async function clearAll() {
+    for (const s of STORES) {
+      await clearStore(s);
+    }
+    // 同时清空 localStorage 备份
+    try {
+      localStorage.removeItem('jade_backup');
+    } catch (e) {}
+  }
+
   async function requestPersistent() {
     if (navigator.storage && navigator.storage.persist) {
       const granted = await navigator.storage.persist();
@@ -121,5 +132,5 @@ const Store = (() => {
     return false;
   }
 
-  return { open, getAll, get, add, put, del, clearStore, exportAll, importData, requestPersistent, snapshot };
+  return { open, getAll, get, add, put, del, clearStore, exportAll, importData, clearAll, requestPersistent, snapshot };
 })();

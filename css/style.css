@@ -1,0 +1,324 @@
+/* ===== Jade 工作台 自定义样式 ===== */
+*{ -webkit-tap-highlight-color: transparent; box-sizing: border-box; }
+html,body{ margin:0; padding:0; }
+body{
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-size-adjust: 100%;
+  overscroll-behavior-y: contain;
+  background:#f5f5f5;
+  touch-action: manipulation;
+}
+.page{ display:none; }
+.page.active{ display:block; animation: fadeIn .2s ease; }
+@keyframes fadeIn{ from{opacity:0; transform:translateY(6px)} to{opacity:1; transform:none} }
+
+/* 导航按钮 */
+.nav-btn{ color:#aaa; transition:color .15s; }
+.nav-btn.active{ color:#1a1a1a; }
+
+/* 日历格子 */
+.cal-cell{
+  aspect-ratio:1;
+  display:flex; flex-direction:column;
+  align-items:center; justify-content:center;
+  border-radius:.6rem;
+  font-size:12px;
+  position:relative;
+  cursor:pointer;
+  transition:background .12s;
+  min-height:34px;
+}
+.cal-cell:active{ background:#eee; }
+.cal-cell.today{ font-weight:700; }
+.cal-cell.selected{
+  border:2px solid #1a1a1a !important;
+  font-weight:700;
+}
+.cal-cell.other-month{ color:#ccc; }
+.cal-cell .cal-icons{
+  position:absolute; bottom:1px;
+  font-size:8px; line-height:1;
+  display:flex; gap:1px;
+}
+
+/* 收支月历 */
+.fin-cell{
+  aspect-ratio:.85;
+  display:flex; flex-direction:column;
+  align-items:center; justify-content:flex-start;
+  padding-top:3px;
+  border-radius:.4rem;
+  font-size:10px;
+  min-height:30px;
+}
+.fin-cell .fin-amt{
+  font-size:7px; margin-top:1px;
+  white-space:nowrap;
+}
+
+/* 卡片 */
+.card{
+  background:#fff;
+  border-radius:1rem;
+  padding:.75rem;
+  box-shadow:0 1px 3px rgba(0,0,0,.05);
+}
+
+/* 输入框 */
+input,textarea,select{
+  -webkit-appearance:none;
+  appearance:none;
+  background:#f5f5f5;
+  border:1px solid #e5e5e5;
+  border-radius:.75rem;
+  padding:.6rem .8rem;
+  font-size:14px;
+  width:100%;
+  outline:none;
+  transition:border-color .15s;
+}
+input:focus,textarea:focus,select:focus{ border-color:#1a1a1a; }
+input[type="date"]{ min-height:38px; }
+
+/* 标签按钮 */
+.tab-btn{
+  padding:.4rem .8rem;
+  border-radius:.75rem;
+  font-size:12px;
+  font-weight:500;
+  background:#f0f0f0;
+  color:#888;
+  border:none;
+  white-space:nowrap;
+  transition:all .15s;
+}
+.tab-btn.active{
+  background:#1a1a1a;
+  color:#fff;
+}
+.fav-tab{
+  background:#f0f0f0; color:#888;
+  border:none;
+  transition:all .15s;
+}
+.fav-tab.active{ background:#1a1a1a; color:#fff; }
+
+/* 模态弹窗 */
+#modal-overlay{ animation: fadeIn .15s ease; }
+#modal-box{ animation: slideUp .2s ease; }
+@keyframes slideUp{ from{transform:translateY(100%)} to{transform:none} }
+
+/* Toast */
+#toast{ animation: toastIn .2s ease; }
+@keyframes toastIn{ from{opacity:0; transform:translate(-50%,-10px)} to{opacity:1; transform:translate(-50%,0)} }
+
+/* 进度条 */
+.progress-bar{
+  height:6px;
+  background:#e5e5e5;
+  border-radius:3px;
+  overflow:hidden;
+}
+.progress-fill{
+  height:100%;
+  background:#1a1a1a;
+  border-radius:3px;
+  transition:width .3s ease;
+}
+
+/* 迷你+按钮 */
+.mini-plus{
+  width:18px; height:18px;
+  border-radius:50%;
+  background:#e5e5e5;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:12px;
+  color:#666;
+  border:none;
+  cursor:pointer;
+}
+
+/* 资产面板 */
+#asset-panel{ animation: slideDown .2s ease; }
+@keyframes slideDown{ from{opacity:0; transform:translateY(-6px)} to{opacity:1; transform:none} }
+
+/* 新闻卡片 */
+.news-card{
+  background:#fff;
+  border-radius:1rem;
+  padding:.85rem;
+  box-shadow:0 1px 3px rgba(0,0,0,.05);
+}
+.news-title{
+  font-size:14px;
+  font-weight:600;
+  line-height:1.4;
+  margin-bottom:.3rem;
+}
+.news-desc{
+  font-size:12px;
+  color:#888;
+  line-height:1.5;
+  display:-webkit-box;
+  -webkit-line-clamp:2;
+  -webkit-box-orient:vertical;
+  overflow:hidden;
+}
+.trans-result.hidden{display:none;}
+.trans-result{
+  animation:fadeIn .2s ease;
+}
+@keyframes fadeIn{
+  from{opacity:0;transform:translateY(-4px);}
+  to{opacity:1;transform:translateY(0);}
+}
+.news-meta{
+  display:flex;
+  align-items:center;
+  gap:.5rem;
+  margin-top:.4rem;
+  font-size:10px;
+  color:#aaa;
+}
+
+/* 任务卡片 */
+.task-item{
+  display:flex;
+  align-items:flex-start;
+  gap:.6rem;
+  padding:.6rem;
+  background:#fff;
+  border-radius:.75rem;
+  box-shadow:0 1px 2px rgba(0,0,0,.04);
+}
+.task-check{
+  width:20px; height:20px;
+  border:2px solid #ccc;
+  border-radius:50%;
+  flex-shrink:0;
+  margin-top:1px;
+  cursor:pointer;
+  transition:all .15s;
+}
+.task-check.done{
+  background:#1a1a1a;
+  border-color:#1a1a1a;
+  position:relative;
+}
+.task-check.done::after{
+  content:'✓';
+  color:#fff;
+  font-size:11px;
+  position:absolute;
+  top:50%; left:50%;
+  transform:translate(-50%,-50%);
+}
+.task-text.done{ text-decoration:line-through; color:#aaa; }
+
+/* 日期分组标题 */
+.date-group-title{
+  font-size:11px;
+  font-weight:600;
+  color:#999;
+  padding:.5rem .25rem .3rem;
+  margin-top:1.2rem;
+  letter-spacing:.02em;
+}
+.date-group-title:first-child{
+  margin-top:.2rem;
+}
+.date-group{
+  margin-bottom:1.8rem;
+}
+.date-group + .date-group{
+  border-top:1px dashed #eee;
+  padding-top:.5rem;
+}
+
+/* 收支记录 */
+.fin-record{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:.6rem .75rem;
+  background:#fff;
+  border-radius:.75rem;
+  box-shadow:0 1px 2px rgba(0,0,0,.04);
+}
+
+/* 收藏卡片 */
+.fav-card{
+  background:#fff;
+  border-radius:1rem;
+  padding:.85rem;
+  box-shadow:0 1px 3px rgba(0,0,0,.05);
+}
+
+/* 滚动条隐藏 */
+::-webkit-scrollbar{ width:0; height:0; }
+
+/* 按钮通用 */
+.btn-primary{
+  background:#1a1a1a;
+  color:#fff;
+  border:none;
+  border-radius:.75rem;
+  padding:.6rem 1rem;
+  font-size:13px;
+  font-weight:500;
+  cursor:pointer;
+  transition:transform .1s;
+}
+.btn-primary:active{ transform:scale(.97); }
+.btn-secondary{
+  background:#f0f0f0;
+  color:#666;
+  border:none;
+  border-radius:.75rem;
+  padding:.6rem 1rem;
+  font-size:13px;
+  cursor:pointer;
+}
+
+/* 星标按钮 */
+.star-btn{ font-size:16px; cursor:pointer; }
+.star-btn.active{ color:#1a1a1a; }
+
+/* 存钱计划条 */
+.plan-item{
+  background:#fff;
+  border-radius:1rem;
+  padding:.75rem;
+  box-shadow:0 1px 3px rgba(0,0,0,.05);
+}
+
+/* 柱状图 */
+.chart-bar{
+  flex:1;
+  background:#1a1a1a;
+  border-radius:2px 2px 0 0;
+  min-height:2px;
+  position:relative;
+}
+.chart-bar.expense{ background:#bbb; }
+.chart-label{
+  font-size:8px;
+  color:#aaa;
+  text-align:center;
+  margin-top:2px;
+}
+
+/* 可编辑文本 */
+.editable{
+  border:1px dashed transparent;
+  border-radius:4px;
+  padding:1px 3px;
+  cursor:text;
+}
+.editable:focus{
+  border-color:#ccc;
+  background:#f9f9f9;
+  outline:none;
+}

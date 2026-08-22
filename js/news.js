@@ -752,6 +752,7 @@ const News = {
           ${time ? `<span>·</span><span>${time}</span>` : ''}
         </div>
         <div class="flex gap-3 mt-2 text-[10px] text-ash">
+          <button class="news-action" data-action="fav" data-idx="${idx}" data-type="${type}">⭐ 保存</button>
           <button class="news-action" data-action="note" data-idx="${idx}" data-type="${type}">批注</button>
           <button class="news-action" data-action="copy" data-idx="${idx}" data-type="${type}">复制原文</button>
           ${translateBtn}
@@ -926,7 +927,10 @@ const News = {
         <div class="border-t border-fog pt-3 text-sm leading-relaxed text-gray-700 max-h-[50vh] overflow-y-auto">
           ${descHtml || '<p class="text-ash">暂无详细内容</p>'}
         </div>
-        <div class="flex gap-2 pt-2 border-t border-fog">
+        <button onclick="News.toggleFavorite(${idx}, '${type}');News._refreshDetailSaveBtn(${idx}, '${type}')" class="btn-primary w-full py-2.5 text-sm" id="detail-save-btn-${type}-${idx}">
+          ⭐ 一键保存到收藏
+        </button>
+        <div class="flex gap-2 pt-1 border-t border-fog">
           <button onclick="News.openNoteModal(${idx}, '${type}')" class="btn-secondary flex-1 text-xs py-2">批注</button>
           <button onclick="News.copyContent(${idx}, '${type}')" class="btn-secondary flex-1 text-xs py-2">复制</button>
           ${type === 'world' ? '<button onclick="News._detailTranslate(' + idx + ', \'' + type + '\')" class="btn-secondary flex-1 text-xs py-2" id="detail-trans-btn-' + type + '-' + idx + '">译中文</button>' : ''}
@@ -936,8 +940,27 @@ const News = {
     `;
     Modal.open(html);
 
-    // 更新收藏星星状态
+    // 更新收藏状态
     this._refreshDetailStar(idx, type);
+    this._refreshDetailSaveBtn(idx, type);
+  },
+
+  _refreshDetailSaveBtn(idx, type) {
+    const items = type === 'world' ? this._worldItems : this._eduItems;
+    const item = items[idx];
+    if (!item) return;
+    this.findFavorite(item, type).then(fav => {
+      const btn = document.getElementById('detail-save-btn-' + type + '-' + idx);
+      if (btn) {
+        if (fav) {
+          btn.textContent = '✓ 已保存（点击取消）';
+          btn.style.background = '#888';
+        } else {
+          btn.textContent = '⭐ 一键保存到收藏';
+          btn.style.background = '';
+        }
+      }
+    });
   },
 
   _refreshDetailStar(idx, type) {

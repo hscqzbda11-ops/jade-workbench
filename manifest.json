@@ -2,7 +2,7 @@
   "name": "Jade 工作台",
   "short_name": "Jade",
   "description": "Jade手机工作台 - 全自动实时资讯移动端应用",
-  "start_url": "./",
+  "start_url": "./?v=3",
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait",

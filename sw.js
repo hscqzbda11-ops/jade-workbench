@@ -1,17 +1,19 @@
-const CACHE = 'jade-v1';
+const CACHE = 'jade-v3';
 const SHELL = [
   './',
   './index.html',
-  './css/style.css',
-  './js/storage.js',
-  './js/app.js',
-  './js/todo.js',
-  './js/finance.js',
-  './js/news.js',
-  './js/favorites.js',
-  './manifest.json',
+  './css/style.css?v=3',
+  './js/storage.js?v=3',
+  './js/app.js?v=3',
+  './js/todo.js?v=3',
+  './js/finance.js?v=3',
+  './js/news.js?v=3',
+  './js/favorites.js?v=3',
+  './manifest.json?v=3',
   './icons/icon-192.png',
   './icons/icon-512.png',
+  './icons/apple-touch-icon.png',
+  './icons/favicon.svg',
   'https://cdn.tailwindcss.com'
 ];
 
@@ -33,30 +35,48 @@ self.addEventListener('activate', (e) => {
 
 self.addEventListener('fetch', (e) => {
   const url = new URL(e.request.url);
-  // API 请求：网络优先
-  if (url.pathname.startsWith('/api/')) {
+  const req = e.request;
+
+  // HTML 页面：网络优先，失败回退缓存
+  if (req.mode === 'navigate' || (req.method === 'GET' && url.pathname.endsWith('.html')) || url.pathname === '/' || url.pathname.endsWith('/')) {
     e.respondWith(
-      fetch(e.request).catch(() => new Response(JSON.stringify({items:[],categories:[]}), {headers:{'Content-Type':'application/json'}}))
+      fetch(req).then(resp => {
+        const copy = resp.clone();
+        caches.open(CACHE).then(c => c.put(req, copy));
+        return resp;
+      }).catch(() => caches.match(req).then(cached => cached || caches.match('./index.html')))
     );
     return;
   }
-  // 同源资源：缓存优先
+
+  // API 请求：网络优先
+  if (url.pathname.startsWith('/api/')) {
+    e.respondWith(
+      fetch(req).catch(() => new Response(JSON.stringify({items:[],categories:[]}), {headers:{'Content-Type':'application/json'}}))
+    );
+    return;
+  }
+
+  // 同源静态资源：缓存优先，网络回退
   if (url.origin === self.location.origin) {
     e.respondWith(
-      caches.match(e.request).then(cached => cached || fetch(e.request).then(resp => {
-        const copy = resp.clone();
-        caches.open(CACHE).then(c => c.put(e.request, copy));
+      caches.match(req).then(cached => cached || fetch(req).then(resp => {
+        if (resp.ok) {
+          const copy = resp.clone();
+          caches.open(CACHE).then(c => c.put(req, copy));
+        }
         return resp;
       }).catch(() => cached))
     );
     return;
   }
-  // 跨域资源（Tailwind CDN等）：缓存优先，网络回退
+
+  // 跨域资源（Tailwind CDN等）：缓存优先
   e.respondWith(
-    caches.match(e.request).then(cached => cached || fetch(e.request).then(resp => {
+    caches.match(req).then(cached => cached || fetch(req).then(resp => {
       if (resp.ok) {
         const copy = resp.clone();
-        caches.open(CACHE).then(c => c.put(e.request, copy));
+        caches.open(CACHE).then(c => c.put(req, copy));
       }
       return resp;
     }).catch(() => cached))

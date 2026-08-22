@@ -97,9 +97,10 @@ const Finance = {
     if (el2) el2.textContent = this.fmtMoney(sum('fixed'));
     if (el3) el3.textContent = this.fmtMoney(sum('daily'));
 
-    // 日常花销：计算本月已花和剩余
+    // 日常花销：黑色大字显示剩余，灰色小字显示总额和已花
+    const dailyTotalEl = document.getElementById('asset-daily-total');
     const budgetInfo = document.getElementById('daily-budget-info');
-    if (budgetInfo) {
+    if (dailyTotalEl && budgetInfo) {
       const dailyBudget = sum('daily');
       const records = await Store.getAll('finance_records');
       const now = new Date();
@@ -109,8 +110,10 @@ const Finance = {
         .reduce((s, r) => s + (Number(r.amount) || 0), 0);
       const remaining = dailyBudget - monthExpense;
       if (dailyBudget > 0) {
-        budgetInfo.textContent = '已花' + this.fmtMoney(monthExpense) + ' · 剩' + this.fmtMoney(remaining);
+        dailyTotalEl.textContent = this.fmtMoney(remaining);
+        budgetInfo.textContent = '总额' + this.fmtMoney(dailyBudget) + ' · 已花' + this.fmtMoney(monthExpense);
       } else {
+        dailyTotalEl.textContent = this.fmtMoney(0);
         budgetInfo.textContent = '点击 + 设置本月预算';
       }
     }

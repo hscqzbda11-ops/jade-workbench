@@ -308,16 +308,22 @@ const News = {
       if (loading) loading.style.display = 'none';
     }
 
-    if (!this.worldLoaded) {
-      const el = document.getElementById('world-news-list');
-      if (el && this.worldCache.items.length === 0) {
-        el.innerHTML = '<div class="text-center text-xs text-ash py-8">'
-          + '资讯加载失败，请检查网络后重试<br>'
-          + '<button onclick="News.loadWorld()" class="mt-3 px-3 py-1 bg-ink text-white rounded-lg text-xs">重新加载</button>'
-          + '</div>';
-      }
+    if (this.worldLoaded) {
+      // 加载成功
+      if (Nav.current === 'world') Toast.show('刷新成功');
     } else {
-      Toast.show('刷新失败，显示缓存数据');
+      // 加载失败
+      const el = document.getElementById('world-news-list');
+      if (el) {
+        if (this.worldCache.items.length > 0) {
+          Toast.show('刷新失败，显示缓存数据');
+        } else {
+          el.innerHTML = '<div class="text-center text-xs text-ash py-8">'
+            + '资讯加载失败，请检查网络后重试<br>'
+            + '<button onclick="News.loadWorld()" class="mt-3 px-3 py-1 bg-ink text-white rounded-lg text-xs">重新加载</button>'
+            + '</div>';
+        }
+      }
     }
     if (Nav.current === 'world') this.renderWorld();
   },

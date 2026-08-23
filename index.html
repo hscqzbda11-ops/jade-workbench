@@ -3,300 +3,454 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-<meta http-equiv="Pragma" content="no-cache">
-<meta http-equiv="Expires" content="0">
 <title>Jade</title>
-<!-- iOS PWA -->
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Jade">
-<meta name="apple-touch-fullscreen" content="yes">
 <meta name="format-detection" content="telephone=no">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
-<link rel="manifest" href="manifest.json?v=11">
+<link rel="manifest" href="manifest.json?v=12">
 <meta name="theme-color" content="#ffffff">
 <link rel="icon" href="icons/favicon.svg" type="image/svg+xml">
-<!-- Tailwind CDN -->
-<script src="https://cdn.tailwindcss.com"></script>
-<script>
-tailwind.config = {
-  theme: {
-    extend: {
-      colors: { ink: '#000', paper: '#fff', ash: '#999', fog: '#eee', mist: '#f7f7f7', line: '#e5e5e5' },
-      fontFamily: { sans: ['-apple-system','BlinkMacSystemFont','"PingFang SC"','"Helvetica Neue"','sans-serif'] }
-    }
-  }
-}
-</script>
-<link rel="stylesheet" href="css/style.css?v=11">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue",sans-serif;font-size:15px;color:#000;background:#fff;-webkit-font-smoothing:antialiased;-webkit-text-size-adjust:100%;overscroll-behavior-y:contain;touch-action:manipulation}
+.page{display:none}
+.page.active{display:block}
+a{color:#000;text-decoration:none}
+button{font-family:inherit;font-size:inherit;color:inherit;background:none;border:none;cursor:pointer;-webkit-appearance:none}
+input,textarea,select{font-family:inherit;font-size:inherit;color:#000;background:#fff;border:1px solid #ddd;border-radius:6px;padding:8px 10px;width:100%;outline:none;-webkit-appearance:none;appearance:none}
+input:focus,textarea:focus,select:focus{border-color:#000}
+ul{list-style:none}
+
+/* 布局 */
+#app{min-height:100vh;padding-bottom:60px;padding-top:env(safe-area-inset-top)}
+.page-header{padding:20px 16px 12px;display:flex;align-items:center;justify-content:space-between}
+.page-title{font-size:22px;font-weight:700;letter-spacing:-.5px}
+.page-subtitle{font-size:12px;color:#999;margin-top:2px}
+.add-btn{width:28px;height:28px;border:1px solid #000;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;line-height:1}
+.add-btn:active{background:#f5f5f5}
+
+/* 底部导航 */
+.tabbar{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #eee;display:flex;justify-content:space-around;padding:6px 0 8px;padding-bottom:calc(env(safe-area-inset-bottom) + 6px);z-index:100}
+.tabbar-item{display:flex;flex-direction:column;align-items:center;gap:2px;font-size:10px;color:#ccc;padding:2px 8px}
+.tabbar-item.active{color:#000}
+.tabbar-item svg{width:22px;height:22px}
+
+/* 日历 */
+.cal-wrap{padding:0 16px 16px;border-bottom:1px solid #f0f0f0}
+.cal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.cal-month{font-size:14px;font-weight:600}
+.cal-nav{width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:18px;color:#999}
+.cal-week{display:grid;grid-template-columns:repeat(7,1fr);margin-bottom:4px}
+.cal-week div{text-align:center;font-size:10px;color:#bbb;padding:4px 0}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr)}
+.cal-cell{aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:13px;position:relative;cursor:pointer;border-radius:0}
+.cal-cell:active{background:#fafafa}
+.cal-cell.today{font-weight:700}
+.cal-cell.selected{background:#000;color:#fff;border-radius:50%}
+.cal-cell.other{color:#ddd}
+.cal-icons{position:absolute;bottom:3px;display:flex;gap:2px;font-size:8px;line-height:1;font-weight:700}
+.cal-cell.selected .cal-icons{color:#fff}
+
+/* 快捷入口 */
+.quick{padding:12px 16px;display:grid;grid-template-columns:1fr 1fr;gap:10px;border-bottom:1px solid #f0f0f0}
+.quick-btn{border:1px solid #eee;border-radius:8px;padding:14px 0;display:flex;flex-direction:column;align-items:center;gap:4px}
+.quick-btn:active{background:#fafafa}
+.quick-icon{font-size:22px;line-height:1}
+.quick-label{font-size:12px}
+
+/* 概览数据 */
+.stats{padding:12px 16px;display:grid;grid-template-columns:repeat(3,1fr);border-bottom:1px solid #f0f0f0}
+.stat-item{text-align:center;padding:4px 0}
+.stat-item+.stat-item{border-left:1px solid #f0f0f0}
+.stat-label{font-size:10px;color:#999}
+.stat-value{font-size:15px;font-weight:600;margin-top:2px}
+
+/* 列表通用 */
+.list-item{padding:12px 16px;border-bottom:1px solid #f5f5f5}
+.list-item:last-child{border-bottom:none}
+
+/* 待办 */
+.task{display:flex;align-items:flex-start;gap:10px;padding:12px 16px;border-bottom:1px solid #f5f5f5}
+.task:last-child{border-bottom:none}
+.task-check{width:18px;height:18px;border:1.5px solid #ddd;border-radius:50%;flex-shrink:0;margin-top:1px;cursor:pointer}
+.task-check.done{background:#000;border-color:#000;position:relative}
+.task-check.done::after{content:'✓';color:#fff;font-size:10px;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%)}
+.task-body{flex:1;min-width:0}
+.task-text{font-size:14px;line-height:1.4}
+.task-text.done{text-decoration:line-through;color:#ccc}
+.task-date{font-size:11px;color:#ccc;margin-top:4px}
+.date-head{font-size:11px;color:#999;padding:16px 16px 6px;font-weight:600;letter-spacing:.02em}
+.date-head.first{padding-top:4px}
+.date-section{margin-bottom:4px}
+.date-section+.date-section{border-top:1px solid #f0f0f0;margin-top:4px}
+.overdue-mark{text-align:center;font-size:10px;color:#ddd;padding:14px 0 6px;letter-spacing:.1em}
+.overdue .task-text{color:#999}
+
+/* 理财 */
+.asset-row{display:grid;grid-template-columns:repeat(3,1fr);border-bottom:1px solid #f0f0f0}
+.asset-col{padding:12px 8px;text-align:center;position:relative}
+.asset-col+.asset-col{border-left:1px solid #f0f0f0}
+.asset-label{font-size:10px;color:#999}
+.asset-value{font-size:14px;font-weight:600;margin-top:2px}
+.asset-sub{font-size:10px;color:#999;margin-top:2px}
+.asset-add{position:absolute;top:8px;right:4px;font-size:12px;color:#ccc}
+.daily-big{font-size:26px;font-weight:700;letter-spacing:-.5px}
+.daily-small{font-size:10px;color:#999;margin-top:2px}
+
+.section-title{font-size:13px;font-weight:600;padding:14px 16px 8px;display:flex;align-items:center;gap:6px}
+.section-title::before{content:'';width:3px;height:12px;background:#000;display:inline-block}
+
+.fin-row{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;border-bottom:1px solid #f5f5f5}
+.fin-row:last-child{border-bottom:none}
+.fin-left{display:flex;align-items:center;gap:10px}
+.fin-cat{font-size:14px}
+.fin-note{font-size:11px;color:#ccc;margin-top:2px}
+.fin-amt{font-size:14px;font-weight:500}
+
+/* 新闻 */
+.tabs{padding:8px 16px;overflow-x:auto;white-space:nowrap;-webkit-overflow-scrolling:touch;border-bottom:1px solid #f0f0f0}
+.tabs::-webkit-scrollbar{display:none}
+.tab{display:inline-block;padding:5px 12px;font-size:12px;background:#f5f5f5;color:#999;border-radius:999px;margin-right:6px}
+.tab.active{background:#000;color:#fff}
+.news-item{padding:12px 16px;border-bottom:1px solid #f5f5f5;cursor:pointer}
+.news-item:last-child{border-bottom:none}
+.news-title{font-size:14px;font-weight:500;line-height:1.4;margin-bottom:4px}
+.news-desc{font-size:12px;color:#999;line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.news-meta{font-size:10px;color:#ccc;margin-top:6px;display:flex;gap:8px}
+.trans{margin-top:8px;padding-top:8px;border-top:1px dashed #eee;font-size:12px;color:#666;line-height:1.6;display:none}
+.trans.show{display:block}
+.trans-label{font-size:10px;color:#999;margin-bottom:4px;letter-spacing:.05em}
+
+/* 收藏 */
+.fav-item{padding:12px 16px;border:1px solid #f0f0f0;border-radius:8px;margin-bottom:8px}
+
+/* 图表 */
+.chart-wrap{padding:12px 16px}
+.chart{display:flex;align-items:flex-end;justify-content:space-between;gap:2px;height:60px}
+.chart-bar{flex:1;background:#000;border-radius:1px 1px 0 0;min-height:2px}
+.chart-bar.gray{background:#eee}
+
+/* 进度条 */
+.pbar{height:3px;background:#eee;border-radius:2px;overflow:hidden;margin-top:6px}
+.pbar-fill{height:100%;background:#000;border-radius:2px}
+
+/* 模态弹窗 */
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.2);z-index:200;display:none;align-items:flex-end}
+.modal.show{display:flex}
+.modal-box{background:#fff;width:100%;border-radius:16px 16px 0 0;padding:20px 16px;max-height:80vh;overflow-y:auto;padding-bottom:calc(env(safe-area-inset-bottom) + 20px)}
+.modal-title{font-size:16px;font-weight:600;margin-bottom:16px}
+.form-row{margin-bottom:12px}
+.form-label{font-size:12px;color:#999;margin-bottom:6px;display:block}
+.form-actions{display:flex;gap:8px;margin-top:16px}
+.form-actions button{flex:1;padding:12px;border-radius:8px;font-size:14px;font-weight:500;border:none;cursor:pointer}
+.btn-cancel{background:#f5f5f5;color:#666}
+.btn-ok{background:#000;color:#fff}
+
+/* 分段 */
+.seg{display:flex;background:#f5f5f5;border-radius:6px;padding:2px;margin-bottom:12px}
+.seg button{flex:1;padding:7px;font-size:13px;border:none;background:transparent;color:#999;border-radius:4px}
+.seg button.active{background:#fff;color:#000;font-weight:500}
+
+/* Toast */
+#toast{position:fixed;top:60px;left:50%;transform:translateX(-50%);background:#000;color:#fff;padding:8px 14px;border-radius:6px;font-size:12px;z-index:300;display:none}
+#toast.show{display:block;animation:toastIn .2s ease}
+@keyframes toastIn{from{opacity:0;transform:translate(-50%,-10px)}to{opacity:1;transform:translate(-50%,0)}}
+
+/* 空状态 */
+.empty{text-align:center;padding:60px 20px;color:#ccc;font-size:13px}
+
+/* 备份按钮 */
+.backup-section{padding:16px}
+.btn-full{width:100%;padding:12px;border:1px solid #000;border-radius:8px;font-size:13px;font-weight:500;text-align:center}
+.btn-full:active{background:#fafafa}
+.btn-row{display:flex;gap:8px;margin-top:8px}
+.btn-row button{flex:1;padding:10px;border:1px solid #eee;border-radius:8px;font-size:12px}
+
+/* 详情 */
+.detail h3{font-size:15px;font-weight:600;margin:14px 0 8px}
+.detail p{font-size:14px;line-height:1.7;margin-bottom:10px}
+.detail ul{padding-left:18px;margin-bottom:10px}
+.detail li{margin-bottom:4px;font-size:14px;line-height:1.6}
+.detail-cn{margin-top:12px;padding-top:12px;border-top:1px dashed #eee}
+.detail-cn-label{font-size:11px;color:#999;margin-bottom:6px;letter-spacing:.05em}
+.detail-cn p{font-size:13px;color:#666;line-height:1.7}
+
+/* 滚动条隐藏 */
+::-webkit-scrollbar{width:0;height:0}
+
+/* 存钱计划 */
+.plan{padding:12px 16px;border-bottom:1px solid #f5f5f5}
+.plan:last-child{border-bottom:none}
+.plan-title{font-size:14px;font-weight:500;margin-bottom:4px}
+.plan-amt{font-size:12px;color:#999;margin-bottom:6px}
+
+/* 资产明细 */
+.detail-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f5f5f5}
+.detail-row:last-child{border-bottom:none}
+.detail-name{font-size:13px}
+.detail-val{font-size:13px;font-weight:500}
+.collapse-btn{width:100%;padding:10px 16px;text-align:left;font-size:13px;font-weight:500;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #f0f0f0}
+.collapse-btn .arrow{font-size:12px;color:#ccc;transition:transform .2s}
+.collapse-btn.open .arrow{transform:rotate(90deg)}
+</style>
 </head>
-<body class="bg-white text-black font-sans">
+<body>
 
-<!-- ========== App Container ========== -->
-<div id="app" class="min-h-screen pb-24" style="padding-top:env(safe-area-inset-top)">
+<div id="app">
 
-<!-- ========== 首页 ========== -->
+<!-- 首页 -->
 <section id="page-home" class="page active">
-  <div class="px-5 pt-8 pb-5">
-    <h1 class="text-2xl font-bold tracking-tight">Jade</h1>
-    <p class="text-xs text-ash mt-1" id="home-date"></p>
+  <div class="page-header">
+    <div>
+      <div class="page-title">Jade</div>
+      <div class="page-subtitle" id="home-date"></div>
+    </div>
   </div>
 
   <!-- 日历 -->
-  <div class="px-5 mb-6">
-    <div class="flex items-center justify-between mb-3">
-      <button onclick="Calendar.prev()" class="w-8 h-8 flex items-center justify-center text-lg text-ash">‹</button>
-      <span id="cal-title" class="text-sm font-semibold"></span>
-      <button onclick="Calendar.next()" class="w-8 h-8 flex items-center justify-center text-lg text-ash">›</button>
+  <div class="cal-wrap">
+    <div class="cal-head">
+      <button class="cal-nav" onclick="Calendar.prev()">‹</button>
+      <div class="cal-month" id="cal-title"></div>
+      <button class="cal-nav" onclick="Calendar.next()">›</button>
     </div>
-    <div class="grid grid-cols-7 gap-0 mb-1">
-      <div class="text-center text-[10px] text-ash py-1">日</div>
-      <div class="text-center text-[10px] text-ash py-1">一</div>
-      <div class="text-center text-[10px] text-ash py-1">二</div>
-      <div class="text-center text-[10px] text-ash py-1">三</div>
-      <div class="text-center text-[10px] text-ash py-1">四</div>
-      <div class="text-center text-[10px] text-ash py-1">五</div>
-      <div class="text-center text-[10px] text-ash py-1">六</div>
+    <div class="cal-week">
+      <div>日</div><div>一</div><div>二</div><div>三</div><div>四</div><div>五</div><div>六</div>
     </div>
-    <div id="cal-grid" class="grid grid-cols-7 gap-0"></div>
+    <div class="cal-grid" id="cal-grid"></div>
   </div>
 
   <!-- 快捷入口 -->
-  <div class="px-5 mb-6">
-    <div class="grid grid-cols-2 gap-3">
-      <button onclick="Nav.go('finance');Finance.openAddRecord()" class="border border-line rounded-xl py-5 flex flex-col items-center gap-1 active:bg-mist transition">
-        <span class="text-2xl font-bold">$</span>
-        <span class="text-xs">记账</span>
-      </button>
-      <button onclick="Nav.go('todo');Todo.openAdd()" class="border border-line rounded-xl py-5 flex flex-col items-center gap-1 active:bg-mist transition">
-        <span class="text-2xl">👣</span>
-        <span class="text-xs">待办</span>
-      </button>
-    </div>
+  <div class="quick">
+    <button class="quick-btn" onclick="Nav.go('finance');Finance.openAddRecord()">
+      <span class="quick-icon">$</span>
+      <span class="quick-label">记账</span>
+    </button>
+    <button class="quick-btn" onclick="Nav.go('todo');Todo.openAdd()">
+      <span class="quick-icon">👣</span>
+      <span class="quick-label">待办</span>
+    </button>
   </div>
 
   <!-- 今日概览 -->
-  <div class="px-5 mb-6">
-    <div class="grid grid-cols-3 gap-0 border-t border-line">
-      <div class="text-center py-3 border-r border-line">
-        <div class="text-[10px] text-ash">待办</div>
-        <div class="text-base font-bold mt-0.5" id="stat-todo">0</div>
-      </div>
-      <div class="text-center py-3 border-r border-line">
-        <div class="text-[10px] text-ash">今日收支</div>
-        <div class="text-base font-bold mt-0.5" id="stat-finance">¥0</div>
-      </div>
-      <div class="text-center py-3">
-        <div class="text-[10px] text-ash">升本学习</div>
-        <div class="text-base font-bold mt-0.5" id="stat-study">0</div>
-      </div>
+  <div class="stats">
+    <div class="stat-item">
+      <div class="stat-label">待办</div>
+      <div class="stat-value" id="stat-todo">0</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-label">今日收支</div>
+      <div class="stat-value" id="stat-finance">¥0</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-label">升本学习</div>
+      <div class="stat-value" id="stat-study">0</div>
     </div>
   </div>
 
   <!-- 数据备份 -->
-  <div class="px-5 mb-8">
-    <button onclick="exportData()" class="w-full border border-black rounded-lg py-3 text-sm font-medium active:bg-mist transition">
-      备份全部数据
-    </button>
-    <div class="flex gap-2 mt-2">
-      <label class="flex-1 border border-line rounded-lg py-2.5 cursor-pointer active:bg-mist transition">
-        <div class="text-xs text-center">导入恢复</div>
-        <input type="file" accept=".json" class="hidden" onchange="importDataFromFile(this.files[0]);this.value=''">
+  <div class="backup-section">
+    <button class="btn-full" onclick="exportData()">备份全部数据</button>
+    <div class="btn-row">
+      <label style="flex:1;display:block">
+        <button type="button" style="width:100%" onclick="document.getElementById('import-file').click()">导入恢复</button>
+        <input id="import-file" type="file" accept=".json" style="display:none" onchange="importDataFromFile(this.files[0]);this.value=''">
       </label>
-      <button onclick="App.clearAllData()" class="flex-1 border border-line rounded-lg py-2.5 active:bg-mist transition">
-        <div class="text-xs text-center text-ash">清空数据</div>
-      </button>
+      <button onclick="App.clearAllData()">清空数据</button>
     </div>
   </div>
 </section>
 
-<!-- ========== 待办清单 ========== -->
-<section id="page-todo" class="page hidden">
-  <div class="px-5 pt-8 pb-3 flex items-center justify-between">
-    <h1 class="text-2xl font-bold tracking-tight">待办</h1>
-    <button onclick="Todo.openAdd()" class="w-8 h-8 border border-black rounded-full flex items-center justify-center text-lg active:bg-mist">+</button>
+<!-- 待办 -->
+<section id="page-todo" class="page">
+  <div class="page-header">
+    <div class="page-title">待办</div>
+    <button class="add-btn" onclick="Todo.openAdd()">+</button>
   </div>
-  <div id="todo-list" class="px-5 pb-4"></div>
+  <div id="todo-list"></div>
 </section>
 
-<!-- ========== 理财 ========== -->
-<section id="page-finance" class="page hidden">
-  <div class="px-5 pt-8 pb-3 flex items-center justify-between">
-    <h1 class="text-2xl font-bold tracking-tight">理财</h1>
-    <button onclick="Finance.openAddRecord()" class="w-8 h-8 border border-black rounded-full flex items-center justify-center text-lg active:bg-mist">+</button>
+<!-- 理财 -->
+<section id="page-finance" class="page">
+  <div class="page-header">
+    <div class="page-title">理财</div>
+    <button class="add-btn" onclick="Finance.openAddRecord()">+</button>
   </div>
+
   <!-- 资产概览 -->
-  <div class="px-5 mb-5">
-    <div class="grid grid-cols-3 gap-0 border-t border-b border-line">
-      <div class="py-3 border-r border-line relative">
-        <div class="text-[10px] text-ash text-center">风险投资</div>
-        <div class="text-sm font-bold mt-0.5 text-center" id="asset-risk-total">¥0</div>
-        <button onclick="Finance.togglePanel('risk')" class="absolute top-2 right-1 text-xs text-ash">+</button>
-      </div>
-      <div class="py-3 border-r border-line relative">
-        <div class="text-[10px] text-ash text-center">固定资产</div>
-        <div class="text-sm font-bold mt-0.5 text-center" id="asset-fixed-total">¥0</div>
-        <button onclick="Finance.togglePanel('fixed')" class="absolute top-2 right-1 text-xs text-ash">+</button>
-      </div>
-      <div class="py-3 relative">
-        <div class="text-[10px] text-ash text-center">日常开销</div>
-        <div class="text-base font-bold mt-0.5 text-center" id="asset-daily-total">¥0</div>
-        <div class="text-[9px] text-ash mt-0.5 text-center leading-tight" id="daily-budget-info">设置预算</div>
-        <button onclick="Finance.togglePanel('daily')" class="absolute top-2 right-1 text-xs text-ash">+</button>
-      </div>
+  <div class="asset-row">
+    <div class="asset-col">
+      <div class="asset-label">风险投资</div>
+      <div class="asset-value" id="asset-risk-total">¥0</div>
+      <button class="asset-add" onclick="Finance.togglePanel('risk')">+</button>
     </div>
-    <!-- 伸缩面板 -->
-    <div id="asset-panel" class="hidden mt-2 border border-line rounded-lg p-3">
-      <div class="flex items-center justify-between mb-2">
-        <span class="text-xs font-semibold" id="asset-panel-title">编辑资产</span>
-        <button onclick="Finance.closePanel()" class="text-xs text-ash">收起</button>
-      </div>
-      <div id="asset-panel-content"></div>
+    <div class="asset-col">
+      <div class="asset-label">固定资产</div>
+      <div class="asset-value" id="asset-fixed-total">¥0</div>
+      <button class="asset-add" onclick="Finance.togglePanel('fixed')">+</button>
+    </div>
+    <div class="asset-col">
+      <div class="asset-label">日常开销</div>
+      <div class="daily-big" id="asset-daily-total">¥0</div>
+      <div class="daily-small" id="daily-budget-info">设置预算</div>
+      <button class="asset-add" onclick="Finance.togglePanel('daily')">+</button>
     </div>
   </div>
 
-  <!-- 资产明细（折叠） -->
-  <div class="px-5 mb-4">
-    <button onclick="Finance.toggleDetails()" class="w-full py-2.5 border-t border-line flex items-center justify-between">
-      <span class="text-xs font-medium">资产明细</span>
-      <span class="text-xs text-ash" id="details-toggle">展开 ›</span>
-    </button>
-    <div id="asset-details" class="hidden mt-2 space-y-2"></div>
+  <!-- 伸缩面板 -->
+  <div id="asset-panel" style="display:none;padding:12px 16px;border-bottom:1px solid #f0f0f0">
+    <div style="display:flex;justify-content:space-between;margin-bottom:8px">
+      <span style="font-size:13px;font-weight:600" id="asset-panel-title">编辑资产</span>
+      <button style="font-size:12px;color:#999" onclick="Finance.closePanel()">收起</button>
+    </div>
+    <div id="asset-panel-content"></div>
   </div>
+
+  <!-- 资产明细 -->
+  <button class="collapse-btn" onclick="Finance.toggleDetails()">
+    <span>资产明细</span>
+    <span class="arrow" id="details-toggle">›</span>
+  </button>
+  <div id="asset-details" style="display:none;padding:0 16px 8px"></div>
 
   <!-- 收支月历 -->
-  <div class="px-5 mb-4">
-    <div class="flex items-center justify-between mb-2">
-      <button onclick="Finance.prevMonth()" class="w-8 h-8 flex items-center justify-center text-lg text-ash">‹</button>
-      <span id="fin-cal-title" class="text-sm font-semibold">2026年8月</span>
-      <button onclick="Finance.nextMonth()" class="w-8 h-8 flex items-center justify-center text-lg text-ash">›</button>
+  <div class="section-title">本月收支</div>
+  <div style="padding:0 16px">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+      <button style="width:28px;height:28px;font-size:18px;color:#999" onclick="Finance.prevMonth()">‹</button>
+      <span style="font-size:13px;font-weight:600" id="fin-cal-title"></span>
+      <button style="width:28px;height:28px;font-size:18px;color:#999" onclick="Finance.nextMonth()">›</button>
     </div>
-    <div id="fin-cal-grid" class="grid grid-cols-7 gap-0"></div>
+    <div class="cal-week">
+      <div>日</div><div>一</div><div>二</div><div>三</div><div>四</div><div>五</div><div>六</div>
+    </div>
+    <div class="cal-grid" id="fin-cal-grid"></div>
   </div>
 
   <!-- 收支记录 -->
-  <div class="px-5 mb-4">
-    <h2 class="text-sm font-semibold mb-2 border-l-2 border-black pl-2">收支记录</h2>
-    <div id="finance-records" class="space-y-0"></div>
-  </div>
+  <div class="section-title">收支记录</div>
+  <div id="finance-records"></div>
 
   <!-- 收支统计 -->
-  <div class="px-5 mb-4">
-    <h2 class="text-sm font-semibold mb-2 border-l-2 border-black pl-2">收支统计</h2>
-    <div class="border border-line rounded-lg p-3">
-      <div id="finance-chart" class="flex items-end justify-between h-16 gap-0.5"></div>
-    </div>
+  <div class="section-title">收支统计</div>
+  <div class="chart-wrap">
+    <div class="chart" id="finance-chart"></div>
   </div>
 
   <!-- 存钱计划 -->
-  <div class="px-5 mb-6">
-    <div class="flex items-center justify-between mb-2">
-      <h2 class="text-sm font-semibold border-l-2 border-black pl-2">存钱计划</h2>
-      <button onclick="Finance.openAddPlan()" class="text-sm">+</button>
-    </div>
-    <div id="savings-plans" class="space-y-2"></div>
+  <div class="section-title" style="display:flex;justify-content:space-between;align-items:center">
+    <span>存钱计划</span>
+    <button style="font-size:16px;font-weight:400" onclick="Finance.openAddPlan()">+</button>
   </div>
+  <div id="savings-plans"></div>
+
+  <div style="height:20px"></div>
 </section>
 
-<!-- ========== 我与世界 ========== -->
-<section id="page-world" class="page hidden">
-  <div class="px-5 pt-8 pb-2">
-    <h1 class="text-2xl font-bold tracking-tight">我与世界</h1>
-    <p class="text-[10px] text-ash mt-1" id="world-update-time">加载中...</p>
-  </div>
-  <div class="px-5 mb-2 overflow-x-auto" style="-webkit-overflow-scrolling:touch">
-    <div id="world-tabs" class="flex gap-2 pb-1 whitespace-nowrap"></div>
-  </div>
-  <div id="world-news-list" class="px-5 space-y-0 pb-4"></div>
-  <div class="text-center py-6 text-xs text-ash" id="world-loading">正在加载资讯...</div>
-</section>
-
-<!-- ========== 专升本专区 ========== -->
-<section id="page-edu" class="page hidden">
-  <div class="px-5 pt-8 pb-2">
-    <h1 class="text-2xl font-bold tracking-tight">专升本</h1>
-    <p class="text-[10px] text-ash mt-1" id="edu-update-time">加载中...</p>
-  </div>
-  <div class="px-5 mb-2 overflow-x-auto" style="-webkit-overflow-scrolling:touch">
-    <div id="edu-tabs" class="flex gap-2 pb-1 whitespace-nowrap"></div>
-  </div>
-  <div id="edu-content" class="px-5 space-y-0 pb-4"></div>
-  <div class="text-center py-6 text-xs text-ash" id="edu-loading">正在加载...</div>
-</section>
-
-<!-- ========== 我的收藏 ========== -->
-<section id="page-fav" class="page hidden">
-  <div class="px-5 pt-8 pb-2">
-    <h1 class="text-2xl font-bold tracking-tight">收藏</h1>
-    <p class="text-[10px] text-ash mt-1" id="fav-count-label"></p>
-  </div>
-  <div class="px-5 mb-2 overflow-x-auto" style="-webkit-overflow-scrolling:touch">
-    <div class="flex gap-2 pb-1 whitespace-nowrap">
-      <button onclick="Favorites.setTab('world')" class="fav-tab active px-3 py-1 rounded-full text-xs font-medium">世界</button>
-      <button onclick="Favorites.setTab('edu')" class="fav-tab px-3 py-1 rounded-full text-xs font-medium">专升本</button>
-      <button onclick="Favorites.setTab('finance')" class="fav-tab px-3 py-1 rounded-full text-xs font-medium">理财</button>
-      <button onclick="Favorites.setTab('todo')" class="fav-tab px-3 py-1 rounded-full text-xs font-medium">待办</button>
+<!-- 我与世界 -->
+<section id="page-world" class="page">
+  <div class="page-header">
+    <div>
+      <div class="page-title">我与世界</div>
+      <div class="page-subtitle" id="world-update-time">加载中...</div>
     </div>
   </div>
-  <div id="fav-list" class="px-5 space-y-2"></div>
+  <div class="tabs" id="world-tabs"></div>
+  <div id="world-news-list"></div>
+  <div class="empty" id="world-loading">正在加载资讯...</div>
 </section>
 
-</div><!-- /app -->
+<!-- 专升本 -->
+<section id="page-edu" class="page">
+  <div class="page-header">
+    <div>
+      <div class="page-title">专升本</div>
+      <div class="page-subtitle" id="edu-update-time">加载中...</div>
+    </div>
+  </div>
+  <div class="tabs" id="edu-tabs"></div>
+  <div id="edu-content"></div>
+  <div class="empty" id="edu-loading">正在加载...</div>
+</section>
 
-<!-- ========== 底部导航 ========== -->
-<nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-line flex justify-around items-center py-2 z-50" style="padding-bottom:env(safe-area-inset-bottom)">
-  <button onclick="Nav.go('home')" class="nav-btn flex flex-col items-center gap-0.5 py-1 px-2" data-page="home">
-    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 12l9-9 9 9M5 10v10h14V10"/></svg>
-    <span class="text-[9px]">首页</span>
+<!-- 收藏 -->
+<section id="page-fav" class="page">
+  <div class="page-header">
+    <div>
+      <div class="page-title">收藏</div>
+      <div class="page-subtitle" id="fav-count-label"></div>
+    </div>
+  </div>
+  <div class="tabs">
+    <button class="tab fav-tab active" onclick="Favorites.setTab('world')">世界</button>
+    <button class="tab fav-tab" onclick="Favorites.setTab('edu')">专升本</button>
+    <button class="tab fav-tab" onclick="Favorites.setTab('finance')">理财</button>
+    <button class="tab fav-tab" onclick="Favorites.setTab('todo')">待办</button>
+  </div>
+  <div id="fav-list" style="padding:8px 16px"></div>
+</section>
+
+</div>
+
+<!-- 底部导航 -->
+<nav class="tabbar">
+  <button class="tabbar-item active" onclick="Nav.go('home')" data-page="home">
+    <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 12l9-9 9 9M5 10v10h14V10"/></svg>
+    <span>首页</span>
   </button>
-  <button onclick="Nav.go('todo')" class="nav-btn flex flex-col items-center gap-0.5 py-1 px-2" data-page="todo">
-    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M9 11l3 3L22 4M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
-    <span class="text-[9px]">待办</span>
+  <button class="tabbar-item" onclick="Nav.go('todo')" data-page="todo">
+    <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M9 11l3 3L22 4M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+    <span>待办</span>
   </button>
-  <button onclick="Nav.go('finance')" class="nav-btn flex flex-col items-center gap-0.5 py-1 px-2" data-page="finance">
-    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 8c-2 0-3 1-3 2s1 2 3 2 3 1 3 2-1 2-3 2m0-10v2m0 8v2M5 3h14a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2z"/></svg>
-    <span class="text-[9px]">理财</span>
+  <button class="tabbar-item" onclick="Nav.go('finance')" data-page="finance">
+    <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 8c-2 0-3 1-3 2s1 2 3 2 3 1 3 2-1 2-3 2m0-10v2m0 8v2M5 3h14a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2z"/></svg>
+    <span>理财</span>
   </button>
-  <button onclick="Nav.go('world')" class="nav-btn flex flex-col items-center gap-0.5 py-1 px-2" data-page="world">
-    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 010 18M12 3a14 14 0 000 18"/></svg>
-    <span class="text-[9px]">世界</span>
+  <button class="tabbar-item" onclick="Nav.go('world')" data-page="world">
+    <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 010 18"/></svg>
+    <span>世界</span>
   </button>
-  <button onclick="Nav.go('edu')" class="nav-btn flex flex-col items-center gap-0.5 py-1 px-2" data-page="edu">
-    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M2 7l10-4 10 4-10 4L2 7zm0 5l10 4 10-4M2 17l10 4 10-4"/></svg>
-    <span class="text-[9px]">升本</span>
+  <button class="tabbar-item" onclick="Nav.go('edu')" data-page="edu">
+    <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M2 7l10-4 10 4-10 4L2 7zm0 5l10 4 10-4M2 17l10 4 10-4"/></svg>
+    <span>升本</span>
   </button>
-  <button onclick="Nav.go('fav')" class="nav-btn flex flex-col items-center gap-0.5 py-1 px-2" data-page="fav">
-    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0016.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 002 8.5c0 2.29 1.51 4.04 3 5.5l7 7 7-7z"/></svg>
-    <span class="text-[9px]">收藏</span>
+  <button class="tabbar-item" onclick="Nav.go('fav')" data-page="fav">
+    <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0016.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 002 8.5c0 2.29 1.51 4.04 3 5.5l7 7 7-7z"/></svg>
+    <span>收藏</span>
   </button>
 </nav>
 
-<!-- ========== 模态容器 ========== -->
-<div id="modal-overlay" class="hidden fixed inset-0 bg-black/20 z-[100] flex items-end" onclick="Modal.close(event)">
-  <div id="modal-box" class="bg-white w-full rounded-t-2xl p-5 max-h-[80vh] overflow-y-auto" style="padding-bottom:calc(env(safe-area-inset-bottom) + 20px)" onclick="event.stopPropagation()">
+<!-- 模态 -->
+<div class="modal" id="modal-overlay" onclick="Modal.close(event)">
+  <div class="modal-box" onclick="event.stopPropagation()">
     <div id="modal-content"></div>
   </div>
 </div>
 
-<!-- ========== Toast ========== -->
-<div id="toast" class="hidden fixed top-20 left-1/2 -translate-x-1/2 bg-black text-white px-4 py-2 rounded-lg text-xs z-[200]"></div>
+<!-- Toast -->
+<div id="toast"></div>
 
-<!-- ========== Scripts ========== -->
-<script src="js/storage.js?v=11"></script>
-<script src="js/app.js?v=11"></script>
-<script src="js/todo.js?v=11"></script>
-<script src="js/finance.js?v=11"></script>
-<script src="js/news.js?v=11"></script>
-<script src="js/favorites.js?v=11"></script>
 <script>
-// 安全启动：捕获所有错误避免白屏
+// 全局错误捕获，防止白屏
 window.onerror = function(msg, url, line) {
   console.error('Error:', msg, url, line);
   return true;
 };
+window.addEventListener('unhandledrejection', function(e) {
+  console.warn('Unhandled rejection:', e.reason);
+});
+</script>
+<script src="js/storage.js?v=12"></script>
+<script src="js/app.js?v=12"></script>
+<script src="js/todo.js?v=12"></script>
+<script src="js/finance.js?v=12"></script>
+<script src="js/news.js?v=12"></script>
+<script src="js/favorites.js?v=12"></script>
+<script>
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('sw.js?v=11').catch(function(){});
+  navigator.serviceWorker.register('sw.js?v=12').catch(function(){});
 }
 try { App.init(); } catch(e) { console.error('Init error:', e); }
 </script>

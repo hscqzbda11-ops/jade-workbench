@@ -31,8 +31,8 @@ const Nav = {
   go(pageId) {
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
     document.getElementById('page-' + pageId)?.classList.add('active');
-    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-    document.querySelector(`.nav-btn[data-page="${pageId}"]`)?.classList.add('active');
+    document.querySelectorAll('.tabbar-item').forEach(b => b.classList.remove('active'));
+    document.querySelector(`.tabbar-item[data-page="${pageId}"]`)?.classList.add('active');
     this.current = pageId;
     window.scrollTo(0, 0);
     if (pageId === 'home') Home.render();
@@ -48,14 +48,14 @@ const Nav = {
 const Modal = {
   open(html) {
     document.getElementById('modal-content').innerHTML = html;
-    document.getElementById('modal-overlay').classList.remove('hidden');
+    document.getElementById('modal-overlay').classList.add('show');
   },
   close(e) {
     if (e && e.target !== document.getElementById('modal-overlay')) return;
-    document.getElementById('modal-overlay').classList.add('hidden');
+    document.getElementById('modal-overlay').classList.remove('show');
   },
   closeForce() {
-    document.getElementById('modal-overlay').classList.add('hidden');
+    document.getElementById('modal-overlay').classList.remove('show');
   }
 };
 
@@ -64,9 +64,9 @@ const Toast = {
   show(msg, dur = 2000) {
     const el = document.getElementById('toast');
     el.textContent = msg;
-    el.classList.remove('hidden');
+    el.classList.add('show');
     clearTimeout(this._t);
-    this._t = setTimeout(() => el.classList.add('hidden'), dur);
+    this._t = setTimeout(() => el.classList.remove('show'), dur);
   }
 };
 

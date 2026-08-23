@@ -1,4 +1,4 @@
-/* ===== 待办清单模块 · 极简版 ===== */
+/* ===== 待办清单模块 · iOS风格 ===== */
 const Todo = {
   async render() {
     const list = document.getElementById('todo-list');
@@ -25,10 +25,10 @@ const Todo = {
 
     if (todos.length === 0) {
       list.innerHTML = `
-        <div style="text-align:center;padding:80px 20px;color:#ddd;font-size:13px">
+        <div class="empty">
           <div style="font-size:40px;margin-bottom:12px">✓</div>
           <div>还没有任务</div>
-          <div style="font-size:11px;margin-top:4px">点击右上角 + 创建</div>
+          <div style="font-size:12px;margin-top:6px;color:#c7c7cc">点击右上角 + 创建</div>
         </div>`;
       return;
     }
@@ -36,7 +36,7 @@ const Todo = {
     let html = '';
     if (upcoming.length) html += this.renderGroups(upcoming, false);
     if (overdue.length) {
-      html += '<div class="overdue-mark">— 已过期 —</div>';
+      html += '<div class="overdue-sep">已过期</div>';
       html += '<div class="overdue">';
       html += this.renderGroups(overdue, true);
       html += '</div>';
@@ -63,11 +63,11 @@ const Todo = {
       if (date === today) title = '今日 · ' + DateUtil.fmt(date);
       else title = DateUtil.fmt(date);
 
-      const cls = isFirst ? 'date-head first' : 'date-head';
+      const cls = isFirst ? 'date-label first' : 'date-label';
       isFirst = false;
 
-      html += `<div class="date-section">`;
-      html += `<div class="${cls}">${title}</div>`;
+      html += `<div class="date-label ${isFirst ? 'first' : ''}">${title}</div>`;
+      html += `<div class="date-group">`;
       groups[date].forEach(t => { html += this.renderItem(t); });
       html += `</div>`;
     });
@@ -76,21 +76,20 @@ const Todo = {
 
   renderItem(t) {
     const done = !!t.completed;
-    const safeText = this.escape(t.text || '');
+    const safeText = this._esc(t.text || '');
 
     return `
       <div class="task">
-        <div class="task-check ${done ? 'done' : ''}"
-             onclick="Todo.toggle(${t.id})"></div>
+        <div class="task-circle ${done ? 'done' : ''}" onclick="Todo.toggle(${t.id})"></div>
         <div class="task-body">
-          <div class="task-text ${done ? 'done' : ''}">${safeText}</div>
-          ${t.note ? `<div style="font-size:11px;color:#ccc;margin-top:4px">${this.escape(t.note)}</div>` : ''}
+          <div class="task-title ${done ? 'done' : ''}">${safeText}</div>
+          ${t.note ? `<div class="task-note">${this._esc(t.note)}</div>` : ''}
         </div>
-        <span onclick="Todo.openEdit(${t.id})" style="font-size:12px;color:#ddd;flex-shrink:0">⋯</span>
+        <span onclick="Todo.openEdit(${t.id})" style="font-size:18px;color:#c7c7cc;flex-shrink:0">⋯</span>
       </div>`;
   },
 
-  escape(s) {
+  _esc(s) {
     if (s == null) return '';
     return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
   },
@@ -110,28 +109,28 @@ const Todo = {
     const today = DateUtil.today();
     const html = `
       <div class="modal-title">新建任务</div>
-      <div class="form-row">
-        <label class="form-label">任务内容</label>
-        <input id="todo-add-text" type="text" placeholder="输入任务内容..." />
+      <div class="form-field">
+        <label>任务内容</label>
+        <input id="todo-add-text" type="text" placeholder="输入任务..." />
       </div>
-      <div class="form-row">
-        <label class="form-label">日期</label>
+      <div class="form-field">
+        <label>日期</label>
         <input id="todo-add-date" type="date" value="${today}" />
       </div>
-      <div class="form-row">
-        <label class="form-label">备注（可选）</label>
-        <input id="todo-add-note" type="text" placeholder="备注信息..." />
+      <div class="form-field">
+        <label>备注</label>
+        <input id="todo-add-note" type="text" placeholder="可选" />
       </div>
-      <div class="form-actions">
-        <button class="btn-cancel" onclick="Modal.closeForce()">取消</button>
-        <button class="btn-ok" onclick="Todo.doAdd()">保存</button>
+      <div class="btn-row">
+        <button class="btn btn-secondary" onclick="Modal.closeForce()">取消</button>
+        <button class="btn btn-primary" onclick="Todo.doAdd()">保存</button>
       </div>
     `;
     Modal.open(html);
     setTimeout(() => {
       const el = document.getElementById('todo-add-text');
       if (el) el.focus();
-    }, 100);
+    }, 150);
   },
 
   async doAdd() {
@@ -156,21 +155,21 @@ const Todo = {
     if (!t) return;
     const html = `
       <div class="modal-title">编辑任务</div>
-      <div class="form-row">
-        <label class="form-label">任务内容</label>
-        <input id="todo-edit-text" type="text" value="${this.escape(t.text)}" />
+      <div class="form-field">
+        <label>任务内容</label>
+        <input id="todo-edit-text" type="text" value="${this._esc(t.text)}" />
       </div>
-      <div class="form-row">
-        <label class="form-label">日期</label>
+      <div class="form-field">
+        <label>日期</label>
         <input id="todo-edit-date" type="date" value="${t.date || DateUtil.today()}" />
       </div>
-      <div class="form-row">
-        <label class="form-label">备注</label>
-        <input id="todo-edit-note" type="text" value="${this.escape(t.note || '')}" />
+      <div class="form-field">
+        <label>备注</label>
+        <input id="todo-edit-note" type="text" value="${this._esc(t.note || '')}" />
       </div>
-      <div class="form-actions">
-        <button class="btn-cancel" style="color:#c00" onclick="Todo.doDelete(${t.id})">删除</button>
-        <button class="btn-ok" onclick="Todo.doEdit(${t.id})">保存</button>
+      <div class="btn-row">
+        <button class="btn btn-danger" onclick="Todo.doDelete(${t.id})">删除</button>
+        <button class="btn btn-primary" onclick="Todo.doEdit(${t.id})">保存</button>
       </div>
     `;
     Modal.open(html);

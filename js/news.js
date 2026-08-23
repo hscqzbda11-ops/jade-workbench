@@ -270,6 +270,52 @@ const News = {
       translation: '信息套利——利用知识和获取渠道的差距获利——不仅是内部人的专利，每个人都可以做到。实用方法包括：1）跨平台价差——同一产品在不同平台售价不同，低买高卖只需要研究和时机把握。2）本地知识优势——你所在城市或行业的常识可能在其他地方鲜为人知。3）早期采用曲线——率先理解新工具和新平台能创造暂时优势。4）内容整合——将零散信息整理成结构化的有用格式能创造真正的价值。5）技能迁移——将专业技能应用到新场景（如教师做在线课程）能倍增你的收入潜力。关键在于好奇心、观察力，以及对你发现的机会采取行动。',
       source: '认知升级 · 精选'
     },
+    // —— 更多美国金融财政 ——
+    {
+      id: 'w_fin_2', category: '金融财政',
+      title: '美国国债收益率曲线变动与经济信号解读',
+      description: 'The US Treasury yield curve provides critical signals about market expectations for growth and inflation. The 10-year vs 2-year spread, closely watched by economists, has historically predicted recessions when inverted. Currently, as the Fed pivots toward rate cuts, the yield curve is normalizing. Short-term yields are falling faster than long-term yields, reflecting expectations of monetary policy easing. Investors should monitor yield movements alongside economic data — employment, inflation, and consumer spending — to gauge the trajectory of the business cycle. The relationship between bond yields and stock valuations also matters: lower rates generally support equity multiples, but only if earnings hold up.',
+      translation: '美国国债收益率曲线提供了关于市场对增长和通胀预期的关键信号。经济学家密切关注的10年期与2年期利差，在倒挂时历来能预测衰退。目前，随着美联储转向降息，收益率曲线正在正常化。短期收益率下降速度快于长期收益率，反映了货币政策宽松的预期。投资者应结合经济数据——就业、通胀和消费支出——来监控收益率变动，以判断商业周期轨迹。债券收益率与股票估值之间的关系也很重要：低利率通常支持股票估值倍数，但前提是盈利保持稳定。',
+      source: '美国财经观察 · 2026.08'
+    },
+    {
+      id: 'w_fin_3', category: '金融财政',
+      title: '美元霸权地位面临挑战，全球去美元化进程加速',
+      description: 'The US dollar\'s dominance as the world\'s reserve currency faces growing challenges. Countries including China, Russia, and members of the BRICS bloc are increasingly conducting trade in their own currencies. The rise of digital currencies and new payment systems further diversifies the global financial landscape. However, experts caution that de-dollarization is a gradual process, not an abrupt shift. The US economy\'s size, the depth of its financial markets, and the rule of law still support dollar dominance. The real question is whether the world is moving toward a multipolar currency system rather than replacing the dollar with a single alternative. This shift has profound implications for US borrowing costs and global financial stability.',
+      translation: '美元作为世界储备货币的主导地位面临日益增长的挑战。中国、俄罗斯以及金砖国家等越来越多地使用本币进行贸易。数字货币和新支付系统的兴起进一步使全球金融格局多元化。然而，专家警告，去美元化是一个渐进过程，而非突然转变。美国经济规模、金融市场的深度以及法治仍然支撑着美元的主导地位。真正的问题在于，世界是否正在走向一个多极化的货币体系，而非用单一替代货币取代美元。这一转变对美国借贷成本和全球金融稳定具有深远影响。',
+      source: '国际金融观察 · 2026.08'
+    },
+    // —— 更多股票基金 ——
+    {
+      id: 'w_stk_2', category: '股票基金',
+      title: '美股七巨头估值分化，AI投资回报分化开始显现',
+      description: 'The "Magnificent Seven" tech giants that led the US stock market rally are showing divergent performance. Companies with genuine AI revenue growth — particularly those providing infrastructure like chips and cloud services — continue to outperform. Meanwhile, companies where AI remains more hype than reality are starting to underperform. Investors are becoming more selective, focusing on actual profitability rather than narrative. This shift from broad-based tech enthusiasm to fundamental differentiation marks a maturing of the AI investment cycle. Fund managers recommend diversifying beyond the largest names and looking for second-tier beneficiaries that may offer better risk-reward ratios.',
+      translation: '引领美股上涨的"七巨头"科技巨头正在出现分化。那些真正实现AI收入增长的公司——尤其是提供芯片和云服务等基础设施的公司——继续跑赢大盘。与此同时，AI更多停留在炒作层面而非实际落地的公司开始表现不佳。投资者正变得更加挑剔，关注实际盈利能力而非故事叙事。从全面的科技狂热转向基本面分化，标志着AI投资周期正在走向成熟。基金经理建议在最大的公司之外进行多元化配置，寻找可能提供更好风险回报比的二线受益标的。',
+      source: '美股深度 · 2026.08'
+    },
+    {
+      id: 'w_stk_3', category: '股票基金',
+      title: '指数基金vs主动基金：长期数据告诉你真相',
+      description: 'The debate between index funds and actively managed funds continues, but the data tells a clear story. Over 10-year periods, approximately 85-90% of active fund managers fail to beat their benchmark index after fees. This underperformance persists across market cycles and asset classes. Index funds offer broad diversification, low costs, and tax efficiency. However, active management can still add value in less efficient markets like small-cap stocks, emerging markets, and fixed income. The optimal approach for most investors is a core of low-cost index funds supplemented by carefully selected active strategies in niche areas. The most important factor remains asset allocation, not fund selection.',
+      translation: '指数基金与主动管理基金之间的争论仍在继续，但数据说明了一个清晰的事实。在10年的时间跨度里，约85%-90%的主动基金经理在扣除费用后未能跑赢其基准指数。这种跑输现象在不同市场周期和资产类别中都存在。指数基金提供广泛的分散化、低成本和税收效率。然而，在小盘股、新兴市场和固定收益等效率较低的市场中，主动管理仍可能创造价值。对大多数投资者来说，最优策略是以低成本指数基金为核心，在细分领域辅以精心挑选的主动策略。最重要的因素仍然是资产配置，而非基金选择。',
+      source: '投资知识 · 精选'
+    },
+    // —— AI 更多内容 ——
+    {
+      id: 'w_ai_2', category: 'AI科技',
+      title: 'AI Agent 时代来临：从聊天机器人到自主行动者',
+      description: 'AI agents — autonomous systems that can plan, reason, and take actions — represent the next major wave of artificial intelligence. Unlike chatbots that only respond to prompts, AI agents can set goals, break them into steps, use tools, and adapt to obstacles. Companies are deploying agents for customer service, software development, research, and operational tasks. The technology is still early, with challenges around reliability and safety, but progress is rapid. The economic implications are enormous: knowledge work could be fundamentally transformed as agents handle more complex cognitive tasks. Workers who learn to collaborate effectively with AI agents will have a significant advantage in the job market.',
+      translation: 'AI智能体——能够规划、推理和采取行动的自主系统——代表了人工智能的下一个主要浪潮。与只响应提示的聊天机器人不同，AI智能体可以设定目标、分解步骤、使用工具并适应障碍。企业正在部署智能体用于客户服务、软件开发、研究和运营任务。这项技术仍处于早期阶段，在可靠性和安全性方面存在挑战，但进展迅速。经济影响是巨大的：随着智能体处理更复杂的认知任务，知识工作可能从根本上被改变。学会与AI智能体有效协作的工作者将在就业市场中拥有显著优势。',
+      source: 'AI前沿 · 2026.08'
+    },
+    // —— 国情更多内容 ——
+    {
+      id: 'w_war_2', category: '战争国情',
+      title: '中国经济转型进行时：从高速增长到高质量发展',
+      description: "China's economy is undergoing a profound structural transformation. The old growth model driven by real estate investment and export manufacturing is fading, while new engines like advanced manufacturing, green energy, and domestic consumption are emerging. The transition is challenging — property sector deleveraging, local government debt, and weak consumer confidence are headwinds. However, China continues to lead in key industries including electric vehicles, solar panels, batteries, and industrial automation. The government's policy focus has shifted from stimulus to structural reform and tech self-reliance. How this transition unfolds will shape not only China's future but also the global economy for decades to come.",
+      translation: '中国经济正在经历深刻的结构性转型。由房地产投资和出口制造驱动的旧增长模式正在消退，而高端制造、绿色能源和国内消费等新引擎正在崛起。转型充满挑战——房地产去杠杆、地方政府债务和消费信心不足都是逆风。然而，中国在电动汽车、太阳能板、电池和工业自动化等关键产业中继续保持领先。政府政策重点已从刺激转向结构性改革和科技自立自强。这一转型的走向不仅将塑造中国的未来，也将在未来几十年影响全球经济。',
+      source: '中国经济观察 · 2026.08'
+    },
   ],
 
   // ===== 专升本内置学习资料 =====

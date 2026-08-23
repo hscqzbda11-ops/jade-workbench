@@ -102,7 +102,7 @@ const Calendar = {
     let html = '';
     // 上月填充
     for (let i = firstDay - 1; i >= 0; i--) {
-      html += `<div class="cal-cell other-month">${prevDays - i}</div>`;
+      html += `<div class="cal-cell other">${prevDays - i}</div>`;
     }
     // 本月
     for (let d = 1; d <= days; d++) {
@@ -120,14 +120,14 @@ const Calendar = {
       if (isSelected) cls.push('selected');
       html += `<div class="${cls.join(' ')}" onclick="Calendar.select('${dateStr}')">
         <span>${d}</span>
-        ${icons ? `<div class="cal-icons">${icons}</div>` : ''}
+        ${icons ? `<div class="cal-dots">${icons}</div>` : ''}
       </div>`;
     }
     // 下月填充
     const total = firstDay + days;
     const fill = (7 - (total % 7)) % 7;
     for (let i = 1; i <= fill; i++) {
-      html += `<div class="cal-cell other-month">${i}</div>`;
+      html += `<div class="cal-cell other">${i}</div>`;
     }
     grid.innerHTML = html;
   },

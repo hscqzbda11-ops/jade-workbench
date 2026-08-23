@@ -89,25 +89,25 @@ const Favorites = {
   // ===== 渲染单条收藏卡片 =====
   renderCard(fav, idx) {
     const noteHtml = fav.note
-      ? `<div class="mt-1.5 px-2 py-1.5 bg-fog rounded-lg text-[11px] text-gray-600 leading-relaxed">批注：${_esc(fav.note)}</div>`
+      ? `<div style="margin-top:8px;padding:8px;background:#f2f2f7;border-radius:8px;font-size:12px;color:#3a3a3c;line-height:1.5">批注：${_esc(fav.note)}</div>`
       : '';
     const time = fav.createdAt ? DateUtil.fmtFull(fav.createdAt) : '';
     const sourceLabel = this.getSourceLabel(fav);
 
     return `
-      <div class="fav-card">
-        <div class="text-sm font-semibold leading-snug">${_esc(fav.title || '无标题')}</div>
-        <div class="news-desc mt-1">${_esc(fav.content || '无内容')}</div>
+      <div class="news-card" style="cursor:default">
+        <div style="font-size:15px;font-weight:500;line-height:1.4;margin-bottom:6px;letter-spacing:-.1px">${_esc(fav.title || '无标题')}</div>
+        <div class="news-desc">${_esc(fav.content || '无内容')}</div>
         ${noteHtml}
         <div class="news-meta">
           ${sourceLabel ? `<span>${_esc(sourceLabel)}</span><span>·</span>` : ''}
           <span>${time}</span>
         </div>
-        <div class="flex gap-3 mt-2 text-[10px] text-ash">
-          <button onclick="Favorites.openNoteModal(${idx})" class="hover:text-ink">编辑批注</button>
-          <button onclick="Favorites.copyContent(${idx})" class="hover:text-ink">复制</button>
-          <button onclick="Favorites.confirmDelete(${idx})" class="hover:text-ink">删除</button>
-          <button onclick="Favorites.confirmUnfavorite(${idx})" class="hover:text-ink">取消收藏</button>
+        <div style="display:flex;gap:14px;margin-top:10px;font-size:12px;color:#8e8e93">
+          <button onclick="Favorites.openNoteModal(${idx})">编辑批注</button>
+          <button onclick="Favorites.copyContent(${idx})">复制</button>
+          <button onclick="Favorites.confirmDelete(${idx})">删除</button>
+          <button onclick="Favorites.confirmUnfavorite(${idx})">取消收藏</button>
         </div>
       </div>
     `;

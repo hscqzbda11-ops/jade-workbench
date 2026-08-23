@@ -860,9 +860,15 @@ const News = {
   renderNewsCard(item, idx, type, isFav) {
     const time = this.getDisplayTime(item);
     const hasTrans = item.translation && item.translation.length > 0;
-    const transLabel = hasTrans ? ' · 含翻译' : '';
     const starClass = isFav ? 'fav-btn on' : 'fav-btn';
     const starText = isFav ? '已收藏' : '收藏';
+
+    // 灰色小字翻译（取前80字左右）
+    let transPreview = '';
+    if (hasTrans) {
+      const short = item.translation.length > 85 ? item.translation.slice(0, 85) + '...' : item.translation;
+      transPreview = `<div class="news-trans">${_esc(short)}</div>`;
+    }
 
     return `
       <div class="news-card" onclick="News.openDetail(${idx}, '${type}')">
@@ -870,6 +876,7 @@ const News = {
           <div style="flex:1;min-width:0">
             <div class="news-title">${_esc(item.title || '无标题')}</div>
             <div class="news-desc">${_esc(item.description || '')}</div>
+            ${transPreview}
           </div>
           <div class="fav-col" onclick="event.stopPropagation();News.toggleFavorite(${idx}, '${type}');News._refreshNewsCardFav(${idx}, '${type}')" id="newscard-fav-${type}-${idx}">
             <div class="${starClass}">${isFav ? '★' : '☆'}</div>
@@ -879,7 +886,6 @@ const News = {
         <div class="news-meta">
           <span>${_esc(item.source || '未知来源')}</span>
           ${item.category ? `<span>· ${_esc(item.category)}</span>` : ''}
-          ${hasTrans ? `<span>· 含翻译</span>` : ''}
         </div>
       </div>
     `;

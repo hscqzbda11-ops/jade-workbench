@@ -478,54 +478,72 @@ const Finance = {
     }).join('');
   },
 
-  /* ---------- 9. 最近7天收支统计图（柱状图） ---------- */
+  /* ---------- 9. 本月收支统计（柱状图） ---------- */
   async renderChart() {
     const el = document.getElementById('finance-chart');
     if (!el) return;
     const records = await Store.getAll('finance_records');
 
-    // 最近 7 天
+    const year = this.calYear;
+    const month = this.calMonth;
+    const daysInMonth = DateUtil.daysInMonth(year, month);
+
+    // 本月每日支出
     const days = [];
-    for (let i = 6; i >= 0; i--) {
-      const d = new Date();
-      d.setHours(0, 0, 0, 0);
-      d.setDate(d.getDate() - i);
-      const ds = d.getFullYear() + '-' +
-        String(d.getMonth() + 1).padStart(2, '0') + '-' +
-        String(d.getDate()).padStart(2, '0');
+    for (let d = 1; d <= daysInMonth; d++) {
+      const ds = year + '-' + String(month + 1).padStart(2, '0') + '-' + String(d).padStart(2, '0');
       const inc = records.filter(r => r.date === ds && r.type === 'income')
         .reduce((s, r) => s + (Number(r.amount) || 0), 0);
       const exp = records.filter(r => r.date === ds && r.type === 'expense')
         .reduce((s, r) => s + (Number(r.amount) || 0), 0);
-      days.push({ label: String(d.getDate()), inc, exp });
+      days.push({ label: d, inc, exp });
     }
 
-    const max = Math.max(1, ...days.flatMap(d => [d.inc, d.exp]));
-    const maxH = 52; // 柱体最大像素高度（容器 h-20=80px，留出标签空间）
-    const barW = 6;
+    const max = Math.max(1, ...days.map(d => d.exp));
+    const maxH = 60;
+
+    // 每天一根柱子，太多的话间隔显示标签
+    const showLabelEvery = daysInMonth > 20 ? 5 : 1;
 
     el.innerHTML = days.map(d => {
-      const incH = d.inc > 0 ? Math.max(3, Math.round(d.inc / max * maxH)) : 0;
-      const expH = d.exp > 0 ? Math.max(3, Math.round(d.exp / max * maxH)) : 0;
-      const incBar = '<div class="chart-bar" style="height:' + incH + 'px;width:' + barW +
-        'px;min-height:0" title="收入 ' + this.fmtMoney(d.inc) + '"></div>';
-      const expBar = '<div class="chart-bar expense" style="height:' + expH + 'px;width:' + barW +
-        'px;min-height:0" title="支出 ' + this.fmtMoney(d.exp) + '"></div>';
-      return '<div class="flex-1 flex flex-col items-center justify-end gap-1" style="height:100%">' +
-          '<div class="flex items-end gap-0.5 justify-center">' + incBar + expBar + '</div>' +
-          '<div class="chart-label">' + d.label + '</div>' +
+      const h = d.exp > 0 ? Math.max(2, Math.round(d.exp / max * maxH)) : 1;
+      const showLabel = d.label % showLabelEvery === 0 || d.label === daysInMonth;
+      return '<div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%">' +
+          '<div class="chart-bar" style="height:' + h + 'px;width:100%;min-height:2px;max-width:6px;margin:0 auto"></div>' +
+          (showLabel ? '<div style="font-size:9px;color:#c7c7cc;margin-top:4px">' + d.label + '</div>' : '<div style="height:13px"></div>') +
         '</div>';
     }).join('');
 
-    // 追加一次灰度图例（仅创建一次）
+    // 图例
     const parent = el.parentElement;
     if (parent && !parent.querySelector('.chart-legend')) {
       const legend = document.createElement('div');
-      legend.className = 'chart-legend flex gap-4 mt-2 text-[9px] text-ash';
+      legend.className = 'chart-legend';
+      legend.style.cssText = 'display:flex;gap:14px;margin-top:10px;font-size:11px;color:#8e8e93';
       legend.innerHTML =
-        '<span class="flex items-center gap-1"><span style="display:inline-block;width:8px;height:8px;background:#1a1a1a;border-radius:1px"></span>收入</span>' +
-        '<span class="flex items-center gap-1"><span style="display:inline-block;width:8px;height:8px;background:#bbb;border-radius:1px"></span>支出</span>';
+        '<span style="display:flex;align-items:center;gap:5px"><span style="display:inline-block;width:10px;height:10px;background:#000;border-radius:2px"></span>支出</span>';
       parent.appendChild(legend);
+    }
+
+    // 本月汇总
+    const totalInc = days.reduce((s, d) => s + d.inc, 0);
+    const totalExp = days.reduce((s, d) => s + d.exp, 0);
+    const net = totalInc - totalExp;
+    if (parent && !parent.querySelector('.chart-summary')) {
+      const sum = document.createElement('div');
+      sum.className = 'chart-summary';
+      sum.style.cssText = 'display:flex;justify-content:space-between;margin-top:12px;padding-top:10px;border-top:1px solid #f2f2f7;font-size:12px';
+      sum.innerHTML =
+        '<span>收入 <b style="color:#000;font-weight:600">¥' + this.fmtMoney(totalInc) + '</b></span>' +
+        '<span>支出 <b style="color:#000;font-weight:600">¥' + this.fmtMoney(totalExp) + '</b></span>' +
+        '<span>结余 <b style="color:#000;font-weight:600">¥' + this.fmtMoney(net) + '</b></span>';
+      parent.appendChild(sum);
+    } else if (parent && parent.querySelector('.chart-summary')) {
+      const sum = parent.querySelector('.chart-summary');
+      sum.innerHTML =
+        '<span>收入 <b style="color:#000;font-weight:600">¥' + this.fmtMoney(totalInc) + '</b></span>' +
+        '<span>支出 <b style="color:#000;font-weight:600">¥' + this.fmtMoney(totalExp) + '</b></span>' +
+        '<span>结余 <b style="color:#000;font-weight:600">¥' + this.fmtMoney(net) + '</b></span>';
     }
   },
 

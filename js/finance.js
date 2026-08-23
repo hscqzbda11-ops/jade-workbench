@@ -327,15 +327,11 @@ const Finance = {
     const days = DateUtil.daysInMonth(this.calYear, this.calMonth);
     const prevDays = DateUtil.daysInMonth(this.calYear, this.calMonth - 1);
     const todayStr = DateUtil.today();
-    const weekdays = ['日', '一', '二', '三', '四', '五', '六'];
 
-    let html = weekdays.map(w =>
-      '<div class="text-center text-[9px] text-ash py-1">' + w + '</div>'
-    ).join('');
-
+    let html = '';
     // 上月填充
     for (let i = firstDay - 1; i >= 0; i--) {
-      html += '<div class="fin-cell" style="opacity:.3"><span>' + (prevDays - i) + '</span></div>';
+      html += `<div class="cal-cell other">${prevDays - i}</div>`;
     }
     // 本月
     for (let d = 1; d <= days; d++) {
@@ -344,23 +340,22 @@ const Finance = {
         String(d).padStart(2, '0');
       const isToday = dateStr === todayStr;
       const net = netMap[dateStr];
-      const cls = ['fin-cell'];
+      const cls = ['cal-cell'];
       if (isToday) cls.push('today');
-      const todayStyle = isToday ? 'background:#ececec;font-weight:700;' : '';
-      let amt = '';
+      let dot = '';
       if (net && net !== 0) {
-        const color = net > 0 ? '#1a1a1a' : '#8a8a8a';
-        amt = '<span class="fin-amt" style="color:' + color + '">' + this.fmtNet(net) + '</span>';
+        if (net < 0) dot = '<div class="cal-dots"><span>$</span></div>';
       }
-      html += '<div class="' + cls.join(' ') + '" style="' + todayStyle + '" ' +
-        'onclick="Finance.openAddRecord(\'' + dateStr + '\')">' +
-        '<span>' + d + '</span>' + amt + '</div>';
+      html += `<div class="${cls.join(' ')}" onclick="Finance.openAddRecord('${dateStr}')">
+        <span>${d}</span>
+        ${dot}
+      </div>`;
     }
     // 下月填充
     const total = firstDay + days;
     const fill = (7 - (total % 7)) % 7;
     for (let i = 1; i <= fill; i++) {
-      html += '<div class="fin-cell" style="opacity:.3"><span>' + i + '</span></div>';
+      html += `<div class="cal-cell other">${i}</div>`;
     }
     grid.innerHTML = html;
   },

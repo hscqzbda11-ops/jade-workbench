@@ -858,27 +858,49 @@ const News = {
 
   // ===== 渲染单条资讯卡片 =====
   renderNewsCard(item, idx, type, isFav) {
-    const star = isFav ? '★' : '☆';
     const time = this.getDisplayTime(item);
     const hasTrans = item.translation && item.translation.length > 0;
     const transLabel = hasTrans ? ' · 含翻译' : '';
+    const starClass = isFav ? 'fav-btn on' : 'fav-btn';
+    const starText = isFav ? '已收藏' : '收藏';
 
     return `
-      <div class="news-item" onclick="News.openDetail(${idx}, '${type}')">
-        <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px">
+      <div class="news-card" onclick="News.openDetail(${idx}, '${type}')">
+        <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px">
           <div style="flex:1;min-width:0">
-            <div style="font-size:14px;font-weight:500;line-height:1.4;margin-bottom:4px">${_esc(item.title || '无标题')}</div>
-            <div style="font-size:12px;color:#999;line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden">${_esc(item.description || '')}</div>
+            <div class="news-title">${_esc(item.title || '无标题')}</div>
+            <div class="news-desc">${_esc(item.description || '')}</div>
           </div>
-          <span style="font-size:16px;flex-shrink:0;line-height:1.4;color:${isFav ? '#000' : '#ddd'}" onclick="event.stopPropagation();News.toggleFavorite(${idx}, '${type}');this.textContent = this.textContent === '★' ? '☆' : '★';this.style.color = this.style.color === 'rgb(0, 0, 0)' ? '#ddd' : '#000'">${star}</span>
+          <div class="fav-col" onclick="event.stopPropagation();News.toggleFavorite(${idx}, '${type}');News._refreshNewsCardFav(${idx}, '${type}')" id="newscard-fav-${type}-${idx}">
+            <div class="${starClass}">${isFav ? '★' : '☆'}</div>
+            <div class="fav-label">${starText}</div>
+          </div>
         </div>
-        <div style="font-size:10px;color:#ccc;margin-top:6px;display:flex;gap:6px">
+        <div class="news-meta">
           <span>${_esc(item.source || '未知来源')}</span>
           ${item.category ? `<span>· ${_esc(item.category)}</span>` : ''}
           ${hasTrans ? `<span>· 含翻译</span>` : ''}
         </div>
       </div>
     `;
+  },
+
+  _refreshNewsCardFav(idx, type) {
+    const el = document.getElementById(`newscard-fav-${type}-${idx}`);
+    if (!el) return;
+    const star = el.querySelector('.fav-btn');
+    const label = el.querySelector('.fav-label');
+    if (!star || !label) return;
+    const isOn = star.classList.contains('on');
+    if (isOn) {
+      star.classList.remove('on');
+      star.textContent = '☆';
+      label.textContent = '收藏';
+    } else {
+      star.classList.add('on');
+      star.textContent = '★';
+      label.textContent = '已收藏';
+    }
   },
 
   // ===== 获取显示时间 =====
